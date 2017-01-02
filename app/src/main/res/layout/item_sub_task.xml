@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drag_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="@dimen/item_section_spacing">
+
+    <com.ihunter.taskee.ui.CustomTextView
+        android:id="@+id/sub_task_title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
+        android:text="Item"
+        android:textColor="@color/colorPrimaryText"
+        app:fontName="@string/lato_regular"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/remove_sub_task"
+        android:layout_height="24dp"
+        android:layout_width="24dp"
+        android:src="@drawable/zzz_close"
+        android:tint="@color/light_gray"
+        android:layout_gravity="center_vertical"/>
+
+</LinearLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/plan_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_section_spacing"
+                android:orientation="horizontal">
+
+                <com.ihunter.taskee.ui.CustomTextView
+                    android:id="@+id/plan_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:text="This is some text and some stuff for the title"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="16sp" />
+
+                <com.ihunter.taskee.ui.CustomTextView
+                    android:id="@+id/plan_time"
+                    style="@style/ItemCalendarViewDescriptionTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Mar 12, 2016 - 3:00am" />
+            </LinearLayout>
+
+            <com.ihunter.taskee.ui.CustomTextView
+                android:id="@+id/plan_description"
+                style="@style/ItemCalendarViewDescriptionTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_section_spacing"
+                android:text="@string/description_placeholder" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:orientation="horizontal">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    style="@style/ItemCalendarViewActionImages"
+                    app:iiv_icon="@string/faw_check" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/upcoming_plan_action_margin"
+                    android:layout_height="wrap_content" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/edit_task"
+                    style="@style/ItemCalendarViewActionImages"
+                    app:iiv_icon="@string/faw_pencil" />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="@dimen/upcoming_plan_action_margin"
+                    android:layout_height="wrap_content" />
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/delete_task"
+                    style="@style/ItemCalendarViewActionImages"
+                    app:iiv_icon="@string/faw_trash_o" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/priority_tag"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="right"
+        android:src="@drawable/priority_triangle"
+        android:tint="@color/low_priority" />
+
+</FrameLayout>

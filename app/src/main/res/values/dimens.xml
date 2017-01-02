@@ -1,0 +1,20 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="urgency_size">30dp</dimen>
+    <dimen name="urgency_margin_bottom">5dp</dimen>
+    <dimen name="expandable_list_height">40dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="fab_padding">15dp</dimen>
+
+    <dimen name="upcoming_plan_action_margin">30dp</dimen>
+    <dimen name="upcoming_plan_action_size">15dp</dimen>
+
+    <dimen name="item_section_spacing">15dp</dimen>
+
+    <dimen name="create_task_spacing">1dp</dimen>
+
+
+</resources>

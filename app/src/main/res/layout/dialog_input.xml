@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:layout_margin="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:id="@+id/top_dialog">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/dialog_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/zzz_view_list"
+            android:tint="@android:color/white"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <com.ihunter.taskee.ui.CustomTextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dialog Title"
+            android:textSize="16dp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:visibility="gone"
+            app:fontName="@string/lato_regular"/>
+
+        <com.ihunter.taskee.ui.CustomEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_dialog_text"
+            android:layout_marginBottom="20dp"
+            app:fontName="@string/lato_regular"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right">
+
+            <com.ihunter.taskee.ui.CustomTextView
+                style="@style/CustomDialogActionButtons"
+                android:id="@+id/negative_dialog"
+                android:text="CANCEL"
+                android:visibility="gone" />
+
+            <com.ihunter.taskee.ui.CustomTextView
+                style="@style/CustomDialogActionButtons"
+                android:id="@+id/positive_dialog"
+                android:text="OK" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

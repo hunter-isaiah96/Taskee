@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTextView">
+        <attr name="fontName" format="string" />
+    </declare-styleable>
+    <declare-styleable name="CustomRadioButton">
+        <attr name="unchecked_color" format="color"></attr>
+        <attr name="checked_color" format="color"></attr>
+    </declare-styleable>
+</resources>
