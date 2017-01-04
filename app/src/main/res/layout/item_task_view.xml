@@ -39,20 +39,25 @@
                     android:layout_weight="1"
                     android:paddingRight="10dp"
                     android:text="This is some text and some stuff for the title"
-                    android:textColor="@color/colorPrimaryText"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:gravity="center_vertical"
+                    app:fontName="@string/lato_regular" />
 
                 <com.ihunter.taskee.ui.CustomTextView
-                    android:id="@+id/plan_time"
-                    style="@style/ItemCalendarViewDescriptionTime"
+                    android:id="@+id/plan_date"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Mar 12, 2016 - 3:00am" />
+                    android:text="@string/line_select_date_time"
+                    android:gravity="center_vertical|right"
+                    android:textSize="12sp"
+                    android:textColor="@color/textColorSecondary"
+                    app:fontName="@string/lato_regular"/>
+
             </LinearLayout>
 
             <com.ihunter.taskee.ui.CustomTextView
                 android:id="@+id/plan_description"
-                style="@style/ItemCalendarViewDescriptionTime"
+                style="@style/TaskViewDescriptionTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/item_section_spacing"
@@ -65,7 +70,7 @@
                 android:orientation="horizontal">
 
                 <com.mikepenz.iconics.view.IconicsImageView
-                    style="@style/ItemCalendarViewActionImages"
+                    style="@style/TaskViewActionImages"
                     app:iiv_icon="@string/faw_check" />
 
                 <android.support.v4.widget.Space
@@ -74,7 +79,7 @@
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/edit_task"
-                    style="@style/ItemCalendarViewActionImages"
+                    style="@style/TaskViewActionImages"
                     app:iiv_icon="@string/faw_pencil" />
 
                 <android.support.v4.widget.Space
@@ -83,7 +88,7 @@
 
                 <com.mikepenz.iconics.view.IconicsImageView
                     android:id="@+id/delete_task"
-                    style="@style/ItemCalendarViewActionImages"
+                    style="@style/TaskViewActionImages"
                     app:iiv_icon="@string/faw_trash_o" />
 
             </LinearLayout>
@@ -91,7 +96,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/priority_tag"

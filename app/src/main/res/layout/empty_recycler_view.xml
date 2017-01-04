@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:src="@drawable/zzz_close_circle"
-            android:tint="@color/colorPrimaryDark" />
+            android:tint="@color/colorAccent" />
 
         <com.ihunter.taskee.ui.CustomTextView
             android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:padding="20dp"
             android:text="No Plans Today"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold"
             app:fontName="Lato-Bold.ttf" />
 

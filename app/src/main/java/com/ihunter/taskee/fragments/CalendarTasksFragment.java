@@ -20,11 +20,13 @@ import android.widget.LinearLayout;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
-import com.ihunter.taskee.TaskeeApplication;
+import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
+import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.activities.MainActivity;
 import com.ihunter.taskee.adapters.PlanItemAdapter;
 import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.interfaces.CalendarTasksFragmentInterface;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -45,7 +47,7 @@ import io.realm.Sort;
  * Created by Master Bison on 12/21/2016.
  */
 
-public class CalendarTasksFragment extends Fragment implements CompactCalendarView.CompactCalendarViewListener, AppBarLayout.OnOffsetChangedListener, DatePickerDialog.OnDateSetListener{
+public class CalendarTasksFragment extends Fragment implements CompactCalendarView.CompactCalendarViewListener, AppBarLayout.OnOffsetChangedListener, DatePickerDialog.OnDateSetListener, CalendarTasksFragmentInterface{
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -70,6 +72,7 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
 
     @BindView(R.id.toolbar_calendar)
     CompactCalendarView calendarView2;
+
     Realm realm;
 
     boolean isExpanded = true;
@@ -77,7 +80,6 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
     Calendar lastDateSelected;
 
     SimpleDateFormat title_date = new SimpleDateFormat("EEE, MMM dd - yyyy");
-    List<Event> eventList;
     RealmResults<Plan> eventPlans;
     PlanItemAdapter calendarPlansAdapter;
 
@@ -86,7 +88,6 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         setHasOptionsMenu(true);
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
         lastDateSelected = Calendar.getInstance();
-        eventList = new ArrayList<>();
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         ButterKnife.bind(this, view);
 
@@ -107,7 +108,6 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Do something that differs the Activity's menu here
         inflater.inflate(R.menu.calendar_view_menu, menu);
         menu.findItem(R.id.select_date).getIcon().setColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN);
         super.onCreateOptionsMenu(menu, inflater);
@@ -174,7 +174,7 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         selectedDateEnd.set(Calendar.AM_PM, Calendar.PM);
 
         RealmResults<Plan> plans = getResultsInTime(selectedDateStart.getTime().getTime(), selectedDateEnd.getTime().getTime());
-        calendarPlansAdapter.getplans(plans);
+        calendarPlansAdapter.replacePlansList(plans);
 
     }
 
@@ -194,30 +194,32 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         animateChevron();
     }
 
-    public void addCalendarEvents(){
-        eventList.clear();
-        eventPlans = getAllTasks();
-        for(int i = 0; i < eventPlans.size(); i++){
+    public void addCalendarEvents(RealmResults<Plan> plans){
+        List<Event> events = new ArrayList<>();
+        events.clear();
+        for(Plan plan: plans){
             int colorRes = 0;
-            if(eventPlans.get(i).getPriority() == 1){
-                colorRes = R.color.low_priority;
-            }else if(eventPlans.get(i).getPriority() == 2){
-                colorRes = R.color.medium_priority;
-            }else if(eventPlans.get(i).getPriority() == 3){
-                colorRes = R.color.high_priority;
+            switch(plan.getPriority()){
+                case 1:
+                    colorRes = R.color.low_priority;
+                    break;
+                case 2:
+                    colorRes = R.color.medium_priority;
+                    break;
+                case 3:
+                    colorRes = R.color.high_priority;
+                    break;
             }
-            eventList.add(new Event(ContextCompat.getColor(getContext(),colorRes), eventPlans.get(i).getTimestamp()));
+            events.add(new Event(ContextCompat.getColor(getContext(),colorRes), plan.getTimestamp()));
         }
         calendarView2.removeAllEvents();
-        calendarView2.addEvents(eventList);
+        calendarView2.addEvents(events);
     }
 
     public void setupCalendarView(Calendar calendar) {
 
-        addCalendarEvents();
-
         lastDateSelected = calendar;
-        setToolbarTitle(new SimpleDateFormat("EEE, MMM dd - yyyy").format(calendar.getTime()));
+        setToolbarTitle(Constants.getShortDate(calendar.getTimeInMillis()));
         calendar.set(Calendar.HOUR, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -233,8 +235,9 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         nextDay.set(Calendar.AM_PM, Calendar.PM);
 
         calendarPlansAdapter = new PlanItemAdapter(getContext(), getResultsInTime(calendar.getTimeInMillis(), nextDay.getTimeInMillis()));
-        calendarPlansAdapter.setCalendarFragment(this);
+        calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
         plansList.setAdapter(calendarPlansAdapter);
+        addCalendarEvents(getAllTasks());
     }
 
     public RealmResults<Plan> getAllTasks(){
@@ -261,13 +264,16 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendarView2.setCurrentDate(calendar.getTime());
         setupCalendarView(calendar);
+    }
 
+    @Override
+    public void onRefreshEvents() {
+        addCalendarEvents(getAllTasks());
     }
 }

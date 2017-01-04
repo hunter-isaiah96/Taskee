@@ -1,12 +1,10 @@
-package com.ihunter.taskee.activities;
-
-import android.net.Uri;
+package com.ihunter.taskee.presenters;
 
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.interfaces.TaskEditorInterface;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.realm.Realm;
@@ -17,39 +15,21 @@ import io.realm.Realm;
 
 public class TaskEditorPresenter {
 
-    Plan plan;
     boolean inEditMode = false;
 
-    private TaskEditorView createTaskView;
+    private TaskEditorInterface createTaskView;
     private Realm realm;
 
-    public TaskEditorPresenter(TaskEditorView createTaskView){
+    public TaskEditorPresenter(TaskEditorInterface createTaskView){
         this.createTaskView = createTaskView;
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
-        plan = new Plan();
-    }
-
-    public void addSubTask(String string){
-        createTaskView.onAddSubTask(string);
-    }
-
-    public String getPlanDate(){
-       return new SimpleDateFormat("MMM dd, yyyy - h:mma").format(plan.getTimestamp());
     }
 
     public void setPlanDate(long time){
-        plan.setTimestamp(time);
-        plan.setDateSet(true);
-        createTaskView.onPlanDateSet(new SimpleDateFormat("MMM dd, yyyy - h:mma").format(time));
+        createTaskView.onPlanDateSet(time);
     }
 
-    public void setPlanImage(String s){
-        plan.setImage(s);
-        createTaskView.onImageSet(Uri.parse(s));
-    }
-
-    // Validates The Plan Before Callback
-    public void savePlan(){
+    public void savePlan(final Plan plan){
         if(plan.getTitle().length() == 0 || plan.getDescription().length() == 0){
             createTaskView.onPlanValidationError(TaskeeApplication.getContext().getString(R.string.create_task_title_description_error));
             return;
@@ -60,11 +40,12 @@ public class TaskEditorPresenter {
             createTaskView.onPlanValidationError(TaskeeApplication.getContext().getString(R.string.create_task_time_error));
             return;
         }
-        // Validation was Successful
+
         if(!inEditMode) {
             int num = realm.where(Plan.class).max("id") == null ? 0 : (realm.where(Plan.class).max("id").intValue()) + 1;
             plan.setId(num);
         }
+
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
@@ -83,7 +64,6 @@ public class TaskEditorPresenter {
         });
     }
 
-    // Checks if Date is in the Future
     private boolean isAfterCurrentTime(long timestamp){
         if(timestamp > Calendar.getInstance().getTimeInMillis()){
             return true;
@@ -92,20 +72,10 @@ public class TaskEditorPresenter {
         }
     }
 
-    public void setTitle(String string){
-        createTaskView.onTitleSet(string);
-    }
-
-    public Plan getPlan() {
-        return plan;
-    }
-
     public void editPlan(long id){
         Plan plan = realm.where(Plan.class).equalTo("id", id).findFirst();
-        this.plan = realm.copyFromRealm(plan);
-        this.plan.setDateSet(true);
         this.inEditMode = true;
-        createTaskView.onPlanForEditorMode();
+        createTaskView.onPlanForEditorMode(realm.copyFromRealm(plan));
     }
 
 }

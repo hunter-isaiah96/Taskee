@@ -15,7 +15,6 @@
         android:gravity="center_vertical"
         android:paddingLeft="20dp"
         android:text="Item"
-        android:textColor="@color/colorPrimaryText"
         app:fontName="@string/lato_regular"/>
 
     <android.support.v7.widget.AppCompatImageView
@@ -23,7 +22,6 @@
         android:layout_height="24dp"
         android:layout_width="24dp"
         android:src="@drawable/zzz_close"
-        android:tint="@color/light_gray"
         android:layout_gravity="center_vertical"/>
 
 </LinearLayout>

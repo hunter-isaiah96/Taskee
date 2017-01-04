@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ihunter.taskee.activities.TaskEditor"
+            android:name="com.ihunter.taskee.activities.TaskEditorActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"></activity>

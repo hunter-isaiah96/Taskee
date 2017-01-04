@@ -31,9 +31,9 @@ public class CustomEditText extends AppCompatEditText {
 
     public void init(Context context, AttributeSet attrs){
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.CustomTextView, 0, 0);
+                R.styleable.CustomEditText, 0, 0);
 
-        String typefaceName = a.getString(R.styleable.CustomTextView_fontName);
+        String typefaceName = a.getString(R.styleable.CustomEditText_fontName);
 
         if (typefaceName != null && !typefaceName.equals("")) {
             setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/" + typefaceName));

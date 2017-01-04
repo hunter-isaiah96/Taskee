@@ -12,7 +12,7 @@ public class DBMigration implements RealmMigration{
     @Override
     public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
         RealmSchema schema = realm.getSchema();
-        if(oldVersion == 1){
+        if(oldVersion == 0){
         }
     }
 }

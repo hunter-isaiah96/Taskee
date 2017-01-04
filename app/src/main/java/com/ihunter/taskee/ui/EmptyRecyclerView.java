@@ -24,6 +24,7 @@ public class EmptyRecyclerView extends RecyclerView {
         public void onItemRangeRemoved(int positionStart, int itemCount) {
             checkIfEmpty();
         }
+
     };
 
     public EmptyRecyclerView(Context context) {
@@ -34,8 +35,7 @@ public class EmptyRecyclerView extends RecyclerView {
         super(context, attrs);
     }
 
-    public EmptyRecyclerView(Context context, AttributeSet attrs,
-                             int defStyle) {
+    public EmptyRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

@@ -15,10 +15,9 @@ import com.ihunter.taskee.R;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.activities.MainActivity;
 import com.ihunter.taskee.adapters.PlanItemAdapter;
-import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.ui.EmptyRecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -36,7 +35,6 @@ import static com.ihunter.taskee.R.id.toolbar_title;
 
 public class AllTasksFragment extends Fragment {
 
-    SimpleDateFormat title_date = new SimpleDateFormat("MMMM dd");
     Realm realm;
     PlanItemAdapter adapter;
     boolean performOnResume = false;
@@ -60,7 +58,7 @@ public class AllTasksFragment extends Fragment {
         ButterKnife.bind(this, view);
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
         ((MainActivity)getActivity()).setToolbar(toolbar);
-        setToolbarTitle(title_date.format(toDate(Calendar.getInstance())));
+        setToolbarTitle(getString(R.string.line_all_tasks));
         adapter = new PlanItemAdapter(getActivity(), getAllTasks());
         allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
         allTasksView.setEmptyView(todoListEmptyView);

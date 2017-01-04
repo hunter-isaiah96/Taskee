@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Plan;
-import com.ihunter.taskee.fragments.CalendarTasksFragment;
+import com.ihunter.taskee.interfaces.CalendarTasksFragmentInterface;
+import com.ihunter.taskee.interfaces.PlanItemInterface;
 import com.ihunter.taskee.viewholders.PlanItemViewHolder;
 
 import io.realm.Realm;
@@ -19,12 +20,13 @@ import io.realm.RealmResults;
  * Created by Master Bison on 11/29/2016.
  */
 
-public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder>{
+public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> implements PlanItemInterface {
 
     Context context;
     RealmResults<Plan> plansList;
-    CalendarTasksFragment calendarTasksFragment = null;
     Realm realm;
+    CalendarTasksFragmentInterface calendarInterface = null;
+
 
     public PlanItemAdapter(Context context, RealmResults<Plan> plansModelList){
         this.context = context;
@@ -54,26 +56,19 @@ public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder>{
     public void replacePlansList(RealmResults<Plan> plansList){
         this.plansList = plansList;
         notifyDataSetChanged();
-
     }
 
-    public void getplans(RealmResults<Plan> plans){
-        plansList = plans;
-        notifyDataSetChanged();
+    public void setCalendarTaskFragmentInterface(CalendarTasksFragmentInterface calendarInterface){
+        this.calendarInterface = calendarInterface;
     }
 
-    public CalendarTasksFragment getCalendarTasksFragment() {
-        return calendarTasksFragment;
-    }
-
-    public void setCalendarFragment(CalendarTasksFragment calendarFragment){
-        this.calendarTasksFragment = calendarFragment;
-    }
-
-    public void refreshCalendarEvents(){
-        if(calendarTasksFragment != null){
-            calendarTasksFragment.addCalendarEvents();
+    @Override
+    public void onItemDelete(int position) {
+        getPlansList().deleteFromRealm(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getPlansList().size());
+        if(calendarInterface != null){
+            calendarInterface.onRefreshEvents();
         }
     }
-
 }

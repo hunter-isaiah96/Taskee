@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.Test;
 import com.ihunter.taskee.fragments.AllTasksFragment;
 import com.ihunter.taskee.fragments.CalendarTasksFragment;
 import com.mikepenz.materialdrawer.Drawer;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
  * Created by Master Bison on 12/21/2016.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.content_container)
     View view;
@@ -45,8 +44,8 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.MANAGE_DOCUMENTS) != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{Manifest.permission.MANAGE_DOCUMENTS}, 0);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
         ButterKnife.bind(this);
         changeCurrentFragment(new AllTasksFragment());
@@ -54,16 +53,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void setUpDrawer(){
-        PrimaryDrawerItem item1 = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_today).withIcon(R.drawable.zzz_calendar_today);
-        PrimaryDrawerItem item2 = new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_calendar).withIcon(R.drawable.zzz_calendar);
         mDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(false)
                 .withDisplayBelowStatusBar(true)
                 .withActionBarDrawerToggleAnimated(true)
                 .addDrawerItems(
-                        item1,
-                        item2
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_all_tasks).withIcon(R.drawable.zzz_view_list).withIconTintingEnabled(true),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.drawer_calendar).withIcon(R.drawable.zzz_calendar).withIconTintingEnabled(true)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity{
 
     @OnClick(R.id.plan)
     protected void planButtonClick() {
-        startActivity(new Intent(MainActivity.this, Test.class));
+        startActivity(new Intent(MainActivity.this, TaskEditorActivity.class));
     }
 
     private void changeCurrentFragment(Fragment fragment) {

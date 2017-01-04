@@ -66,14 +66,29 @@
                             android:layout_height="150dp"
                             android:scaleType="centerCrop" />
 
-                        <android.support.v7.widget.AppCompatImageView
+                        <FrameLayout
                             android:id="@+id/edit_task_remove_image"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_gravity="left"
-                            android:src="@drawable/zzz_close"
-                            android:tint="@color/light_gray"
-                            android:layout_margin="10dp"/>
+                            android:layout_margin="10dp">
+
+                            <android.support.v7.widget.AppCompatImageView
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="left"
+                                android:src="@drawable/zzz_close_circle"
+                                android:tint="@android:color/white" />
+
+                            <android.support.v7.widget.AppCompatImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="left"
+                                android:src="@drawable/zzz_close_circle_outline"
+                                android:tint="?colorPrimary" />
+
+                        </FrameLayout>
+
 
                     </FrameLayout>
 
@@ -93,42 +108,46 @@
                                 android:id="@+id/edit_task_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
                                 android:background="@null"
-                                android:gravity="top|left"
+                                android:gravity="center_vertical"
                                 android:hint="@string/word_title"
                                 android:inputType="textMultiLine|textCapSentences"
                                 android:maxLines="10"
                                 android:paddingRight="10dp"
-                                android:textColor="@color/colorPrimaryText"
-                                android:textColorHint="@color/light_gray"
                                 android:textSize="16sp"
                                 app:fontName="@string/lato_regular" />
 
                             <com.ihunter.taskee.ui.CustomTextView
                                 android:id="@+id/edit_task_date"
-                                style="@style/ItemCalendarViewDescriptionTime"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
-                                android:text="@string/line_select_date_time" />
-
+                                android:gravity="center_vertical"
+                                android:text="@string/line_select_date_time"
+                                android:textColor="@color/textColorSecondary"
+                                android:textSize="12sp"
+                                app:fontName="@string/lato_regular" />
                         </LinearLayout>
 
                         <com.ihunter.taskee.ui.CustomEditText
                             android:id="@+id/edit_task_description"
-                            style="@style/ItemCalendarViewDescriptionTime"
+                            style="@style/TaskViewDescriptionTime"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@null"
+                            android:gravity="top|left"
                             android:hint="@string/word_description"
                             android:inputType="textMultiLine|textCapSentences"
-                            android:textColorHint="@color/light_gray" />
+                            android:paddingBottom="5dp"
+                            android:paddingTop="5dp" />
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/edit_task_sub_task_list"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
                     </LinearLayout>
+
 
                 </LinearLayout>
 
@@ -175,8 +194,6 @@
                 android:maxLines="1"
                 android:padding="10dp"
                 android:paddingRight="10dp"
-                android:textColor="@color/colorPrimaryText"
-                android:textColorHint="@color/light_gray"
                 android:textSize="12sp"
                 app:fontName="@string/lato_regular" />
 
@@ -195,7 +212,7 @@
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
-                app:iiv_color="@color/light_gray"
+                app:iiv_color="@color/textColorSecondary"
                 app:iiv_icon="@string/faw_picture_o"
                 app:iiv_size="15dp" />
 
@@ -206,7 +223,7 @@
                 android:layout_weight="1"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
-                app:iiv_color="@color/light_gray"
+                app:iiv_color="@color/textColorSecondary"
                 app:iiv_icon="@string/faw_calendar_o"
                 app:iiv_size="15dp" />
 

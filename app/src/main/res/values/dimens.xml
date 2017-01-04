@@ -10,7 +10,8 @@
     <dimen name="fab_padding">15dp</dimen>
 
     <dimen name="upcoming_plan_action_margin">30dp</dimen>
-    <dimen name="upcoming_plan_action_size">15dp</dimen>
+    <dimen name="upcoming_plan_action_size">30dp</dimen>
+    <dimen name="upcoming_plan_action_icon_size">15dp</dimen>
 
     <dimen name="item_section_spacing">15dp</dimen>
 
