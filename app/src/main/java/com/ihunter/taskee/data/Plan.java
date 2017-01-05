@@ -11,7 +11,7 @@ public class Plan extends RealmObject{
     @PrimaryKey
     private long id;
     private String title = "";
-    private String description = "";
+    private String note = "";
     private long timestamp = Calendar.getInstance().getTimeInMillis();;
     private int priority = 1;
     private RealmList<SubTask> subTasks;
@@ -49,12 +49,12 @@ public class Plan extends RealmObject{
         return title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNote() {
+        return note;
     }
 
     public void setPriority(int priority) {

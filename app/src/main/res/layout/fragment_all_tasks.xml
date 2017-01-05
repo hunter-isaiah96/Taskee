@@ -3,19 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:background="@color/colorBackground">
 
     <android.support.v7.widget.Toolbar
         style="@style/Toolbar">
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
@@ -26,10 +26,11 @@
 
             </LinearLayout>
 
-            <!--<Spinner-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:entries="@array/spinner"></Spinner>-->
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:entries="@array/spinner"
+                android:visibility="gone" />
 
         </LinearLayout>
 
@@ -38,8 +39,7 @@
     <com.ihunter.taskee.ui.EmptyRecyclerView
         android:id="@+id/all_tasks_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"></com.ihunter.taskee.ui.EmptyRecyclerView>
+        android:layout_height="match_parent"/>
 
     <include layout="@layout/empty_recycler_view"/>
 

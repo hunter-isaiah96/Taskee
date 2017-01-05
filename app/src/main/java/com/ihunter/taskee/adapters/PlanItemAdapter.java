@@ -1,6 +1,6 @@
 package com.ihunter.taskee.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +22,13 @@ import io.realm.RealmResults;
 
 public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> implements PlanItemInterface {
 
-    Context context;
+    Activity context;
     RealmResults<Plan> plansList;
     Realm realm;
     CalendarTasksFragmentInterface calendarInterface = null;
 
 
-    public PlanItemAdapter(Context context, RealmResults<Plan> plansModelList){
+    public PlanItemAdapter(Activity context, RealmResults<Plan> plansModelList){
         this.context = context;
         this.plansList = plansModelList;
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
@@ -36,12 +36,12 @@ public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> im
 
     @Override
     public void onBindViewHolder(final PlanItemViewHolder holder, int position) {
-        holder.bind(plansList.get(position));
+        holder.bind(plansList.get(position), getItemCount());
     }
 
     public PlanItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task_view, parent, false);
-        return new PlanItemViewHolder(v, this);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task_view_test, parent, false);
+        return new PlanItemViewHolder(v, this, context);
     }
 
     @Override

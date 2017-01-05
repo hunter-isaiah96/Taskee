@@ -1,7 +1,6 @@
 package com.ihunter.taskee;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.Iconics;
@@ -15,14 +14,15 @@ import io.realm.RealmConfiguration;
 
 public class TaskeeApplication extends Application{
 
-    private static Context context;
-
     @Override
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
         Iconics.registerFont(new FontAwesome());
-        context = getApplicationContext();
+//        if(BuildConfig.DEBUG) {
+//            TinyDancer.create()
+//                    .show(this);
+//        }
     }
 
     public static RealmConfiguration getRealmConfiugration(){
@@ -30,10 +30,6 @@ public class TaskeeApplication extends Application{
                 .name("taskmanager.realm")
                 .schemaVersion(0)
                 .build();
-    }
-
-    public static Context getContext() {
-        return context;
     }
 }
 

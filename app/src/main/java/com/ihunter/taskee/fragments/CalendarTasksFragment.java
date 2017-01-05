@@ -234,7 +234,7 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         nextDay.set(Calendar.MILLISECOND, 999);
         nextDay.set(Calendar.AM_PM, Calendar.PM);
 
-        calendarPlansAdapter = new PlanItemAdapter(getContext(), getResultsInTime(calendar.getTimeInMillis(), nextDay.getTimeInMillis()));
+        calendarPlansAdapter = new PlanItemAdapter(getActivity(), getResultsInTime(calendar.getTimeInMillis(), nextDay.getTimeInMillis()));
         calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
         plansList.setAdapter(calendarPlansAdapter);
         addCalendarEvents(getAllTasks());

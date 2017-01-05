@@ -33,8 +33,7 @@
             android:id="@+id/dialog_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dialog Title"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"
@@ -52,18 +51,16 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="right">
+            android:layout_gravity="end">
 
             <com.ihunter.taskee.ui.CustomTextView
                 style="@style/CustomDialogActionButtons"
                 android:id="@+id/negative_dialog"
-                android:text="CANCEL"
                 android:visibility="gone" />
 
             <com.ihunter.taskee.ui.CustomTextView
                 style="@style/CustomDialogActionButtons"
-                android:id="@+id/positive_dialog"
-                android:text="OK" />
+                android:id="@+id/positive_dialog"/>
 
         </LinearLayout>
 

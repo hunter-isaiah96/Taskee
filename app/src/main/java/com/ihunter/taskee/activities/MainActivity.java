@@ -81,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.plan)
     protected void planButtonClick() {
-        startActivity(new Intent(MainActivity.this, TaskEditorActivity.class));
+        Intent intent = new Intent(MainActivity.this, TaskEditorActivity.class);
+        startActivity(intent);
     }
 
     private void changeCurrentFragment(Fragment fragment) {

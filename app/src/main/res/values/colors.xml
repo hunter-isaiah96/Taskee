@@ -19,8 +19,8 @@
     <color name="material_drawer_selected_text">#fff</color>
 
     <!-- Urgency Colors -->
-    <color name="low_priority">#36E1BD</color>
-    <color name="medium_priority">#ffeb78</color>
-    <color name="high_priority">#FD6F6E</color>
+    <color name="low_priority">#00ffc9</color>
+    <color name="medium_priority">#ffe54c</color>
+    <color name="high_priority">#ff3d3c</color>
 
 </resources>

@@ -7,16 +7,10 @@
     <string name="drawer_state_open">Open</string>
     <string name="drawer_state_closed">Closed</string>
 
-    <string name="create_task_title_description_error">Please enter both a title and description...</string>
-    <string name="create_task_date_time_error">Please set a due date..</string>
-    <string name="create_task_priority_error">Please select a task priority...</string>
-    <string name="create_task_time_error">Please selected a date in the future</string>
-
-    <string name="create_task_new_sub_task_title">New Sub-Task</string>
-    <string name="create_task_new_sub_negative_button">CANCEL</string>
-    <string name="create_task_new_sub_positive_button">OK</string>
-
-    <string name="add_sub_task">+ Add Sub-Task</string>
+    <string name="edit_task_title_error">Please enter a title &#8230;</string>
+    <string name="edit_task_date_error">Please set a due date &#8230;</string>
+    <string name="edit_task_future_error">Please selected a date in the future</string>
+    <string name="edit_task_save_error">There was a problem saving this task</string>
 
     <string name="lato_black">Lato-Black.ttf</string>
     <string name="lato_black_italic">Lato-BlackItalic.ttf</string>
@@ -34,29 +28,30 @@
     <string name="dialog_negative">NO</string>
 
     <string name="line_select_date">Select Date</string>
-    <string name="line_select_time">Select Time</string>
-    <string name="line_select_date_time">Select Date and Time</string>
     <string name="line_add_sub_task">Add Sub Task</string>
     <string name="line_delete_task">Are you sure you want to delete this task?</string>
     <string name="line_all_tasks">All Tasks</string>
     <string name="line_new_task">New Task</string>
     <string name="line_edit_task">Edit Task</string>
+    <string name="line_no_plans">No Plans Today</string>
 
     <string name="word_choose">Choose</string>
     <string name="word_date">Date</string>
     <string name="word_time">Time</string>
     <string name="word_title">Title</string>
-    <string name="word_description">Description</string>
+    <string name="word_note">Note</string>
     <string name="word_yes">Yes</string>
     <string name="word_no">No</string>
+    <string name="word_save">Save</string>
 
-    <string name="description_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut...</string>
+    <string name="placeholder_date">Jan 1, 2017 &#8211; 12:00AM</string>
+    <string name="placeholder_title">This is a title for a task</string>
+    <string name="placeholder_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
 
     <string-array name="spinner">
         <item>Priority</item>
         <item>Due Date</item>
         <item>Latest</item>
     </string-array>
-
 
 </resources>

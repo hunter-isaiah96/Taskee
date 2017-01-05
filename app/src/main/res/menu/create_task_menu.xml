@@ -3,6 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/save_task" android:title="Save" android:icon="@drawable/zzz_check" app:showAsAction="always"/>
+    <item android:id="@+id/save_task" android:title="@string/word_save" android:icon="@drawable/zzz_check" app:showAsAction="always"/>
 
 </menu>

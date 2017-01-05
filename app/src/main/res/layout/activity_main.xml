@@ -18,6 +18,6 @@
         android:background="@drawable/fab"
         android:padding="@dimen/fab_padding"
         android:src="@drawable/zzz_pencil"
-        android:tint="@android:color/white"></android.support.v7.widget.AppCompatImageView>
+        android:tint="@android:color/white" />
 
 </FrameLayout>

@@ -8,7 +8,7 @@ import java.util.Locale;
  */
 
 public class Constants {
-
+    public enum ValidationError{TITLE_ERR, DATE_ERR, FUTURE_ERR, SAVE_ERR}
     private static final SimpleDateFormat fullDateTime = new SimpleDateFormat("MMM d, yyyy - h:mma", Locale.getDefault());
     private static final SimpleDateFormat shortDate = new SimpleDateFormat("EEE, MMM d - yyyy", Locale.getDefault());
     public static final int PICKFILE_RESULT_CODE = 1;

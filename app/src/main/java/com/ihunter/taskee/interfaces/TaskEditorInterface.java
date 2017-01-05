@@ -1,5 +1,6 @@
 package com.ihunter.taskee.interfaces;
 
+import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.data.Plan;
 
 /**
@@ -8,7 +9,7 @@ import com.ihunter.taskee.data.Plan;
 
 public interface TaskEditorInterface {
 
-    void onPlanValidationError(String string);
+    void onPlanValidationError(Constants.ValidationError validationError);
     void onPlanSaveSuccessful();
     void onPlanForEditorMode(Plan plan);
     void onPlanDateSet(long time);

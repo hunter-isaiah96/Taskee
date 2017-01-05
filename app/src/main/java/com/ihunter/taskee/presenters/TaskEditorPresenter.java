@@ -1,6 +1,6 @@
 package com.ihunter.taskee.presenters;
 
-import com.ihunter.taskee.R;
+import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Plan;
 import com.ihunter.taskee.interfaces.TaskEditorInterface;
@@ -30,14 +30,14 @@ public class TaskEditorPresenter {
     }
 
     public void savePlan(final Plan plan){
-        if(plan.getTitle().length() == 0 || plan.getDescription().length() == 0){
-            createTaskView.onPlanValidationError(TaskeeApplication.getContext().getString(R.string.create_task_title_description_error));
+        if(plan.getTitle().length() == 0){
+            createTaskView.onPlanValidationError(Constants.ValidationError.TITLE_ERR);
             return;
         }else if(!plan.isDateSet()){
-            createTaskView.onPlanValidationError(TaskeeApplication.getContext().getString(R.string.create_task_date_time_error));
+            createTaskView.onPlanValidationError(Constants.ValidationError.DATE_ERR);
             return;
         }else if(!isAfterCurrentTime(plan.getTimestamp())){
-            createTaskView.onPlanValidationError(TaskeeApplication.getContext().getString(R.string.create_task_time_error));
+            createTaskView.onPlanValidationError(Constants.ValidationError.FUTURE_ERR);
             return;
         }
 
@@ -59,7 +59,7 @@ public class TaskEditorPresenter {
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                createTaskView.onPlanValidationError(error.getMessage());
+                createTaskView.onPlanValidationError(Constants.ValidationError.SAVE_ERR);
             }
         });
     }

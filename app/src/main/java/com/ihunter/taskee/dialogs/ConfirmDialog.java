@@ -5,13 +5,13 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 
 import com.ihunter.taskee.R;
+import com.ihunter.taskee.ui.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,14 +24,15 @@ public class ConfirmDialog extends Dialog {
 
     @BindView(R.id.top_dialog)
     LinearLayout topDialog;
+
     @BindView(R.id.negative_dialog)
-    AppCompatTextView negativeDialog;
+    CustomTextView negativeDialog;
 
     @BindView(R.id.positive_dialog)
-    AppCompatTextView positiveDialog;
+    CustomTextView positiveDialog;
 
     @BindView(R.id.dialog_title)
-    AppCompatTextView dialogTitle;
+    CustomTextView dialogTitle;
 
     @BindView(R.id.dialog_icon)
     AppCompatImageView dialogIcon;

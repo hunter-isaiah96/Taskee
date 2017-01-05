@@ -1,13 +1,14 @@
 package com.ihunter.taskee.viewholders;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,6 +30,7 @@ import static android.view.View.VISIBLE;
 
 public class PlanItemViewHolder extends RecyclerView.ViewHolder {
 
+    Activity activity;
     PlanItemInterface planItemView;
     Realm realm;
     Plan plan;
@@ -36,8 +38,8 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.plan_title)
     TextView planTitle;
 
-    @BindView(R.id.plan_description)
-    TextView planDescription;
+    @BindView(R.id.plan_note)
+    TextView planNote;
 
     @BindView(R.id.plan_date)
     TextView planDate;
@@ -48,26 +50,27 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.plan_image)
     AppCompatImageView planImage;
 
-    public PlanItemViewHolder(View v, PlanItemInterface planItemView) {
+    public PlanItemViewHolder(View v, PlanItemInterface planItemView, Activity activity) {
         super(v);
         ButterKnife.bind(this, v);
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
         this.planItemView = planItemView;
+        this.activity = activity;
     }
 
-    public void bind(Plan plan) {
-        this.plan = plan;
-        if(!TextUtils.isEmpty(plan.getImage())){
-            Glide.with(itemView.getContext()).load(Uri.parse(plan.getImage())).placeholder(R.drawable.zzz_download).into(planImage);
-            planImage.setVisibility(VISIBLE);
+    public void bind(Plan plan, int count) {
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        if (getAdapterPosition() == count - 1) {
+            layoutParams.bottomMargin = (int) itemView.getContext().getResources().getDimension(R.dimen.item_margin);
+            layoutParams.topMargin = (int) itemView.getContext().getResources().getDimension(R.dimen.item_margin);
         }else{
-            planImage.setImageBitmap(null);
-            planImage.setVisibility(GONE);
+            layoutParams.bottomMargin = 0;
+            layoutParams.topMargin = (int) itemView.getContext().getResources().getDimension(R.dimen.item_margin);
         }
-        planTitle.setText(plan.getTitle());
-        planDescription.setText(plan.getDescription());
-        planDate.setText(Constants.getFullDateTime(plan.getTimestamp()));
-        switch (plan.getPriority()){
+        itemView.setLayoutParams(layoutParams);
+        this.plan = plan;
+
+        switch (plan.getPriority()) {
             case 1:
                 priorityTag.setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.low_priority));
                 break;
@@ -78,11 +81,28 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
                 priorityTag.setColorFilter(ContextCompat.getColor(itemView.getContext(), R.color.high_priority));
                 break;
         }
+
+        if (!TextUtils.isEmpty(plan.getImage())) {
+            Glide.with(itemView.getContext()).load(plan.getImage()) .into(planImage);
+            planImage.setVisibility(VISIBLE);
+        } else {
+            Glide.clear(planImage);
+            planImage.setVisibility(GONE);
+        }
+        if (!TextUtils.isEmpty(plan.getNote())) {
+            planNote.setText(plan.getNote());
+            planNote.setVisibility(VISIBLE);
+        } else {
+            planNote.setVisibility(GONE);
+        }
+
+        planTitle.setText(plan.getTitle());
+        planDate.setText(Constants.getFullDateTime(plan.getTimestamp()));
     }
 
     @OnClick({R.id.edit_task, R.id.delete_task})
-    protected void editTask(View v){
-        switch (v.getId()){
+    protected void editTask(View v) {
+        switch (v.getId()) {
             case R.id.edit_task:
                 Intent updatePlanIntent = new Intent(v.getContext(), TaskEditorActivity.class);
                 updatePlanIntent.putExtra("item_id", plan.getId());
@@ -102,12 +122,14 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
                                     }
                                 });
                                 dialog.dismiss();
-                            }})
+                            }
+                        })
                         .setNegativeButton(v.getContext().getString(R.string.word_no), new ConfirmDialog.OnNegativeButton() {
                             @Override
                             public void onClick(View v, Dialog dialog) {
                                 dialog.dismiss();
-                            }})
+                            }
+                        })
                         .show();
                 break;
         }

@@ -1,10 +1,12 @@
 package com.ihunter.taskee.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,8 +62,13 @@ public class AllTasksFragment extends Fragment {
         ((MainActivity)getActivity()).setToolbar(toolbar);
         setToolbarTitle(getString(R.string.line_all_tasks));
         adapter = new PlanItemAdapter(getActivity(), getAllTasks());
-        allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) == Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+            allTasksView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        }else{
+            allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
         allTasksView.setEmptyView(todoListEmptyView);
+        allTasksView.setHasFixedSize(true);
         allTasksView.setAdapter(adapter);
         return view;
     }

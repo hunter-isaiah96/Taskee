@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="RtlSymmetry"
     android:id="@+id/drag_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_marginTop="@dimen/item_section_spacing">
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.ihunter.taskee.ui.CustomTextView
         android:id="@+id/sub_task_title"
@@ -13,8 +19,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:paddingLeft="20dp"
-        android:text="Item"
+        android:paddingStart="20dp"
         app:fontName="@string/lato_regular"/>
 
     <android.support.v7.widget.AppCompatImageView

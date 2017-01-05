@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="RtlSymmetry"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
@@ -34,39 +36,40 @@
 
                 <com.ihunter.taskee.ui.CustomTextView
                     android:id="@+id/plan_title"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingRight="10dp"
-                    android:text="This is some text and some stuff for the title"
-                    android:textSize="16sp"
                     android:gravity="center_vertical"
-                    app:fontName="@string/lato_regular" />
+                    android:paddingEnd="10dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/textColorPrimary"
+                    app:fontName="@string/lato_regular"
+                    android:text="@string/placeholder_title"/>
 
                 <com.ihunter.taskee.ui.CustomTextView
                     android:id="@+id/plan_date"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="@string/line_select_date_time"
-                    android:gravity="center_vertical|right"
-                    android:textSize="12sp"
+                    android:gravity="center_vertical|end"
                     android:textColor="@color/textColorSecondary"
-                    app:fontName="@string/lato_regular"/>
+                    android:textSize="12sp"
+                    app:fontName="@string/lato_regular"
+                    android:text="@string/placeholder_date"/>
 
             </LinearLayout>
 
             <com.ihunter.taskee.ui.CustomTextView
-                android:id="@+id/plan_description"
+                android:id="@+id/plan_note"
                 style="@style/TaskViewDescriptionTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/item_section_spacing"
-                android:text="@string/description_placeholder" />
+                android:text="@string/placeholder_lorem"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:orientation="horizontal">
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -101,7 +104,7 @@
         android:id="@+id/priority_tag"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:src="@drawable/priority_triangle"
         android:tint="@color/low_priority" />
 

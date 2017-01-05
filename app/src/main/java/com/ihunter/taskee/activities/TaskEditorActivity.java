@@ -2,7 +2,7 @@ package com.ihunter.taskee.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -53,7 +53,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     Plan plan;
 
     @BindView(R.id.root_view)
-    RelativeLayout rootView;
+    ScrollView rootView;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -70,8 +70,8 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     @BindView(R.id.edit_task_title)
     CustomEditText editTaskTitle;
 
-    @BindView(R.id.edit_task_description)
-    CustomEditText editTaskDescription;
+    @BindView(R.id.edit_task_note)
+    CustomEditText editTaskNote;
 
     @BindView(R.id.edit_task_sub_task_list)
     RecyclerView subTaskRecyclerView;
@@ -100,10 +100,18 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
 
     @OnClick(R.id.edit_task_pick_image)
     protected void onPickImageClick() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICKFILE_RESULT_CODE);
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19){
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICKFILE_RESULT_CODE);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICKFILE_RESULT_CODE);
+        }
     }
 
     @OnClick(R.id.edit_task_remove_image)
@@ -118,9 +126,9 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         plan.setTitle(builder.toString());
     }
 
-    @OnTextChanged(R.id.edit_task_description)
+    @OnTextChanged(R.id.edit_task_note)
     protected void onDescriptionChange(SpannableStringBuilder builder) {
-        plan.setDescription(builder.toString());
+        plan.setNote(builder.toString());
     }
 
     @OnItemSelected(R.id.spinner)
@@ -138,7 +146,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_task);
+        setContentView(R.layout.test_activity_edit_task);
         ButterKnife.bind(this);
         setUpToolbar();
         presenter = new TaskEditorPresenter(this);
@@ -168,7 +176,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
 
     public void setImage(){
         if(!TextUtils.isEmpty(plan.getImage())) {
-            Glide.with(this).load(plan.getImage()).into(editTaskImage);
+            Glide.with(getApplicationContext()).load(plan.getImage()).error(R.drawable.zzz_image_area_close).into(editTaskImage);
             editTaskImageHolder.setVisibility(View.VISIBLE);
             return;
         }
@@ -210,7 +218,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case Constants.PICKFILE_RESULT_CODE:
+            case PICKFILE_RESULT_CODE:
                 if (resultCode == RESULT_OK) {
                     plan.setImage(data.getData().toString());
                     setImage();
@@ -220,8 +228,23 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     }
 
     @Override
-    public void onPlanValidationError(String string) {
-        Snackbar.make(rootView, string, Snackbar.LENGTH_SHORT).show();
+    public void onPlanValidationError(Constants.ValidationError validationError) {
+        String error = "";
+        switch(validationError){
+            case TITLE_ERR:
+                error = getString(R.string.edit_task_title_error);
+                break;
+            case DATE_ERR:
+                error = getString(R.string.edit_task_date_error);
+                break;
+            case FUTURE_ERR:
+                error = getString(R.string.edit_task_future_error);
+                break;
+            case SAVE_ERR:
+                error = getString(R.string.edit_task_save_error);
+                break;
+        }
+        Snackbar.make(rootView, error, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -234,15 +257,12 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         this.plan = plan;
         plan.setDateSet(true);
         editTaskTitle.setText(plan.getTitle());
-        editTaskDescription.setText(plan.getDescription());
+        editTaskNote.setText(plan.getNote());
         editTaskDate.setText(Constants.getFullDateTime(plan.getTimestamp()));
         spinner.setSelection(plan.getPriority() - 1);
         editTaskPickDate.setColorRes(R.color.colorAccent);
         subTaskAdapter.setSubTaskList(plan.getSubTasks());
-        if(!TextUtils.isEmpty(plan.getImage())){
-            Glide.with(getApplicationContext()).load(Uri.parse(plan.getImage())).into(editTaskImage);
-            editTaskImageHolder.setVisibility(View.VISIBLE);
-        }
+        setImage();
     }
 
     @Override
@@ -253,12 +273,12 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         editTaskPickDate.setColorRes(R.color.colorAccent);
     }
 
-    @Override
-    public void onBackPressed() {
-        if(TextUtils.isEmpty(plan.getTitle()) || TextUtils.isEmpty(plan.getDescription()) || !plan.isDateSet() || plan.getPriority() == 0){
-            finish();
-            return;
-        }
-        presenter.savePlan(plan);
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(TextUtils.isEmpty(plan.getTitle()) || !plan.isDateSet() || plan.getPriority() == 0){
+//            finish();
+//            return;
+//        }
+//        presenter.savePlan(plan);
+//    }
 }
