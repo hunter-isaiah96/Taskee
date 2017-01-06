@@ -16,7 +16,7 @@
     <color name="textColorPrimary">#1c1c1c</color>
     <color name="textColorSecondary">#939393</color>
     <color name="textColorHint">#cccccc</color>
-    <color name="colorBackground">@color/colorPrimaryDark</color>
+    <color name="colorBackground">@color/colorPrimary</color>
 
     <!-- Drawer Colors -->
     <color name="material_drawer_background">@color/colorPrimaryDark</color>
