@@ -5,9 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.adapters.SubTaskAdapter;
-import com.ihunter.taskee.ui.CustomTextView;
 import com.ihunter.taskee.data.SubTask;
+import com.ihunter.taskee.interfaces.SubTaskItemInterface;
+import com.ihunter.taskee.ui.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,12 +25,12 @@ public class SubTaskViewHolder extends RecyclerView.ViewHolder{
     @BindView(R.id.remove_sub_task)
     AppCompatImageView removeSubTask;
 
-    SubTaskAdapter adapter;
+    SubTaskItemInterface subTaskItemInterface;
 
-    public SubTaskViewHolder(View v, SubTaskAdapter adapter){
+    public SubTaskViewHolder(View v, SubTaskItemInterface subTaskItemInterface){
         super(v);
-        this.adapter = adapter;
         ButterKnife.bind(this, v);
+        this.subTaskItemInterface = subTaskItemInterface;
     }
 
     public void bind(SubTask subTask){
@@ -39,9 +39,7 @@ public class SubTaskViewHolder extends RecyclerView.ViewHolder{
 
     @OnClick(R.id.remove_sub_task)
     public void removeSubTask(){
-        adapter.getSubTasks().remove(getAdapterPosition());
-        adapter.notifyItemRemoved(getAdapterPosition());
-        adapter.notifyItemRangeChanged(getAdapterPosition(), adapter.getSubTasks().size());
+        subTaskItemInterface.onRemoveSubTask(getAdapterPosition());
     }
 
 }

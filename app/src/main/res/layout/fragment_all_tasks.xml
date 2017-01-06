@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:background="@color/colorBackground">
 
-    <android.support.v7.widget.Toolbar
-        style="@style/Toolbar">
+    <android.support.v7.widget.Toolbar style="@style/Toolbar">
 
         <LinearLayout
             android:baselineAligned="false"
@@ -39,8 +38,8 @@
     <com.ihunter.taskee.ui.EmptyRecyclerView
         android:id="@+id/all_tasks_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
-    <include layout="@layout/empty_recycler_view"/>
+    <include layout="@layout/empty_recycler_view" />
 
 </LinearLayout>

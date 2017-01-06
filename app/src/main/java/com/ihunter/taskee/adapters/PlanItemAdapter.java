@@ -1,19 +1,18 @@
 package com.ihunter.taskee.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.TaskeeApplication;
-import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.interfaces.CalendarTasksFragmentInterface;
 import com.ihunter.taskee.interfaces.PlanItemInterface;
+import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.viewholders.PlanItemViewHolder;
 
-import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
@@ -22,16 +21,16 @@ import io.realm.RealmResults;
 
 public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> implements PlanItemInterface {
 
-    Activity context;
-    RealmResults<Plan> plansList;
-    Realm realm;
+    Context context;
+    RealmResults<Task> plansList;
+    RealmService realm;
     CalendarTasksFragmentInterface calendarInterface = null;
 
 
-    public PlanItemAdapter(Activity context, RealmResults<Plan> plansModelList){
+    public PlanItemAdapter(Context context){
         this.context = context;
-        this.plansList = plansModelList;
-        realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
+        this.realm = new RealmService();
+        plansList = realm.getEmptyResults();
     }
 
     @Override
@@ -40,8 +39,8 @@ public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> im
     }
 
     public PlanItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task_view_test, parent, false);
-        return new PlanItemViewHolder(v, this, context);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task_view, parent, false);
+        return new PlanItemViewHolder(v, this);
     }
 
     @Override
@@ -49,11 +48,11 @@ public class PlanItemAdapter extends RecyclerView.Adapter<PlanItemViewHolder> im
         return plansList.size();
     }
 
-    public RealmResults<Plan> getPlansList(){
+    public RealmResults<Task> getPlansList(){
         return plansList;
     }
 
-    public void replacePlansList(RealmResults<Plan> plansList){
+    public void replacePlansList(RealmResults<Task> plansList){
         this.plansList = plansList;
         notifyDataSetChanged();
     }

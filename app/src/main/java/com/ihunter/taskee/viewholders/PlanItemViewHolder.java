@@ -1,6 +1,5 @@
 package com.ihunter.taskee.viewholders;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -16,7 +15,7 @@ import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.activities.TaskEditorActivity;
-import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.dialogs.ConfirmDialog;
 import com.ihunter.taskee.interfaces.PlanItemInterface;
 
@@ -30,10 +29,9 @@ import static android.view.View.VISIBLE;
 
 public class PlanItemViewHolder extends RecyclerView.ViewHolder {
 
-    Activity activity;
     PlanItemInterface planItemView;
     Realm realm;
-    Plan plan;
+    Task plan;
 
     @BindView(R.id.plan_title)
     TextView planTitle;
@@ -50,15 +48,14 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.plan_image)
     AppCompatImageView planImage;
 
-    public PlanItemViewHolder(View v, PlanItemInterface planItemView, Activity activity) {
+    public PlanItemViewHolder(View v, PlanItemInterface planItemView) {
         super(v);
         ButterKnife.bind(this, v);
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
         this.planItemView = planItemView;
-        this.activity = activity;
     }
 
-    public void bind(Plan plan, int count) {
+    public void bind(Task plan, int count) {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (getAdapterPosition() == count - 1) {
             layoutParams.bottomMargin = (int) itemView.getContext().getResources().getDimension(R.dimen.item_margin);

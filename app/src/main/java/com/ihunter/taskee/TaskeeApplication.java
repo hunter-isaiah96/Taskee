@@ -19,10 +19,6 @@ public class TaskeeApplication extends Application{
         super.onCreate();
         Realm.init(this);
         Iconics.registerFont(new FontAwesome());
-//        if(BuildConfig.DEBUG) {
-//            TinyDancer.create()
-//                    .show(this);
-//        }
     }
 
     public static RealmConfiguration getRealmConfiugration(){

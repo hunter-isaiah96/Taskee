@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
-public class Plan extends RealmObject{
+public class Task extends RealmObject{
     @PrimaryKey
     private long id;
     private String title = "";
@@ -21,7 +21,7 @@ public class Plan extends RealmObject{
     @Ignore
     boolean dateSet = false;
 
-    public Plan(){
+    public Task(){
 
     }
 

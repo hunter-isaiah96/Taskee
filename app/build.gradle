@@ -33,7 +33,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     testCompile 'junit:junit:4.12'
-    compile 'com.github.sundeepk:compact-calendar-view:1.9.6'
+    compile 'com.github.sundeepk:compact-calendar-view:1.9.7'
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
     }

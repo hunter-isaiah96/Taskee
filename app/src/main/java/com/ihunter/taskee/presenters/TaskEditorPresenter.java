@@ -2,7 +2,7 @@ package com.ihunter.taskee.presenters;
 
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.TaskeeApplication;
-import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.interfaces.TaskEditorInterface;
 
 import java.util.Calendar;
@@ -29,7 +29,7 @@ public class TaskEditorPresenter {
         createTaskView.onPlanDateSet(time);
     }
 
-    public void savePlan(final Plan plan){
+    public void savePlan(final Task plan){
         if(plan.getTitle().length() == 0){
             createTaskView.onPlanValidationError(Constants.ValidationError.TITLE_ERR);
             return;
@@ -42,7 +42,7 @@ public class TaskEditorPresenter {
         }
 
         if(!inEditMode) {
-            int num = realm.where(Plan.class).max("id") == null ? 0 : (realm.where(Plan.class).max("id").intValue()) + 1;
+            int num = realm.where(Task.class).max("id") == null ? 0 : (realm.where(Task.class).max("id").intValue()) + 1;
             plan.setId(num);
         }
 
@@ -73,7 +73,7 @@ public class TaskEditorPresenter {
     }
 
     public void editPlan(long id){
-        Plan plan = realm.where(Plan.class).equalTo("id", id).findFirst();
+        Task plan = realm.where(Task.class).equalTo("id", id).findFirst();
         this.inEditMode = true;
         createTaskView.onPlanForEditorMode(realm.copyFromRealm(plan));
     }

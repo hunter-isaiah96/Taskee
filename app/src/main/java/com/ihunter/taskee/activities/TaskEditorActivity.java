@@ -30,7 +30,7 @@ import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.adapters.PriorityAdapter;
 import com.ihunter.taskee.adapters.SubTaskAdapter;
-import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.dialogs.CustomTimeDialog;
 import com.ihunter.taskee.interfaces.TaskEditorInterface;
 import com.ihunter.taskee.presenters.TaskEditorPresenter;
@@ -50,7 +50,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     TaskEditorPresenter presenter;
     PriorityAdapter adapter;
     SubTaskAdapter subTaskAdapter;
-    Plan plan;
+    Task plan;
 
     @BindView(R.id.root_view)
     ScrollView rootView;
@@ -81,6 +81,9 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
 
     @BindView(R.id.edit_task_pick_date)
     IconicsImageView editTaskPickDate;
+
+    @BindView(R.id.edit_task_pick_image)
+    IconicsImageView editTaskPickImage;
 
     @BindView(R.id.edit_task_priority_tag)
     AppCompatImageView editTaskPriority;
@@ -118,6 +121,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     protected void onRemoveImageClick(){
         editTaskImageHolder.setVisibility(View.GONE);
         editTaskImage.setImageBitmap(null);
+        editTaskPickImage.setColorRes(R.color.textColorSecondary);
         plan.setImage("");
     }
 
@@ -146,7 +150,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_activity_edit_task);
+        setContentView(R.layout.activity_edit_task);
         ButterKnife.bind(this);
         setUpToolbar();
         presenter = new TaskEditorPresenter(this);
@@ -162,7 +166,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
             toolbarTitle.setText(getString(R.string.line_edit_task));
         }else{
             toolbarTitle.setText(getString(R.string.line_new_task));
-            plan = new Plan();
+            plan = new Task();
         }
     }
 
@@ -178,6 +182,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         if(!TextUtils.isEmpty(plan.getImage())) {
             Glide.with(getApplicationContext()).load(plan.getImage()).error(R.drawable.zzz_image_area_close).into(editTaskImage);
             editTaskImageHolder.setVisibility(View.VISIBLE);
+            editTaskPickImage.setColorRes(R.color.colorAccent);
             return;
         }
         editTaskImageHolder.setVisibility(View.GONE);
@@ -253,7 +258,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
     }
 
     @Override
-    public void onPlanForEditorMode(Plan plan) {
+    public void onPlanForEditorMode(Task plan) {
         this.plan = plan;
         plan.setDateSet(true);
         editTaskTitle.setText(plan.getTitle());
@@ -281,4 +286,5 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
 //        }
 //        presenter.savePlan(plan);
 //    }
+
 }

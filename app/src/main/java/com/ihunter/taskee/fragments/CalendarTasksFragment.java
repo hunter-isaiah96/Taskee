@@ -22,15 +22,14 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.activities.MainActivity;
 import com.ihunter.taskee.adapters.PlanItemAdapter;
-import com.ihunter.taskee.data.Plan;
+import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.interfaces.CalendarTasksFragmentInterface;
+import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,15 +38,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
 /**
- * Created by Master Bison on 12/21/2016.
+ * Created by Master Bison on 1/5/2017.
  */
 
-public class CalendarTasksFragment extends Fragment implements CompactCalendarView.CompactCalendarViewListener, AppBarLayout.OnOffsetChangedListener, DatePickerDialog.OnDateSetListener, CalendarTasksFragmentInterface{
+public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener, CompactCalendarView.CompactCalendarViewListener, CalendarTasksFragmentInterface, DatePickerDialog.OnDateSetListener {
+
+
+    private RealmService realmService;
+    private PlanItemAdapter calendarPlansAdapter;
+    private boolean isExpanded = true;
+    private Calendar lastDateSelected;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -56,54 +58,52 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
     Toolbar toolbar;
 
     @BindView(R.id.toolbar_title)
-    AppCompatTextView toolbar_title;
+    AppCompatTextView toolbarTitle;
 
     @BindView(R.id.toolbar_calendar_indicator)
-    AppCompatImageView toolbar_indicator;
+    AppCompatImageView toolbarChevron;
 
-    @BindView(R.id.toolbar_expand_container)
-    LinearLayout toolbar_expand_container;
-
-    @BindView(R.id.plansList)
-    EmptyRecyclerView plansList;
+    @BindView(R.id.toolbar_calendar)
+    CompactCalendarView calendarView;
 
     @BindView(R.id.todo_list_empty_view)
     LinearLayout todoListEmptyView;
 
-    @BindView(R.id.toolbar_calendar)
-    CompactCalendarView calendarView2;
+    @BindView(R.id.plansList)
+    EmptyRecyclerView plansList;
 
-    Realm realm;
+    @OnClick(R.id.toolbar_expand_container)
+    protected void expandToolbarClick() {
+        appBar.setExpanded(!isExpanded);
+    }
 
-    boolean isExpanded = true;
-    boolean shouldExecuteOnResume = false;
-    Calendar lastDateSelected;
-
-    SimpleDateFormat title_date = new SimpleDateFormat("EEE, MMM dd - yyyy");
-    RealmResults<Plan> eventPlans;
-    PlanItemAdapter calendarPlansAdapter;
-
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
+        realmService = new RealmService();
         lastDateSelected = Calendar.getInstance();
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         ButterKnife.bind(this, view);
-
-        ((MainActivity)getActivity()).setToolbar(toolbar);
-
+        ((MainActivity) getActivity()).setToolbar(toolbar);
         appBar.setExpanded(true);
         appBar.addOnOffsetChangedListener(this);
-
-        setupCalendarView(lastDateSelected);
-
-        calendarView2.setListener(this);
-
+        calendarView.setListener(this);
+        calendarPlansAdapter = new PlanItemAdapter(getContext());
+        calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
         plansList.setLayoutManager(new LinearLayoutManager(getContext()));
-        plansList.setNestedScrollingEnabled(false);
+        plansList.setAdapter(calendarPlansAdapter);
+        todoListEmptyView.findViewById(R.id.empty_image).setVisibility(View.GONE);
         plansList.setEmptyView(todoListEmptyView);
+        refreshEvents();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setUpView();
+        refreshEvents();
     }
 
     @Override
@@ -116,72 +116,58 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-
-        switch(itemId){
+        switch (itemId) {
             case R.id.select_date:
                 DatePickerDialog.newInstance(CalendarTasksFragment.this,
                         Calendar.getInstance().get(Calendar.YEAR),
                         Calendar.getInstance().get(Calendar.MONTH),
                         Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
-                        .show(getActivity().getFragmentManager(), "Datepickerdialog");;
+                        .show(getActivity().getFragmentManager(), "Datepickerdialog");
+                ;
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.toolbar_expand_container)
-    protected void expandToolbarClick() {
-        appBar.setExpanded(!isExpanded);
+    private void setUpView() {
+        calendarPlansAdapter.replacePlansList(realmService.getResultsOnDay(lastDateSelected.getTimeInMillis()));
+        setToolbarTitle(Constants.getShortDate(lastDateSelected.getTimeInMillis()));
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(!shouldExecuteOnResume){
-            shouldExecuteOnResume = true;
-        }else{
-            setupCalendarView(lastDateSelected);
+    private void setToolbarTitle(String string) {
+        toolbarTitle.setText(string);
+    }
+
+    private void animateChevron() {
+        toolbarChevron.animate().rotation(isExpanded ? 0 : 180).setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+    }
+
+    private Calendar toCalendar(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
+
+    private void refreshEvents() {
+        List<Event> events = new ArrayList<>();
+        events.clear();
+        for (Task plan : realmService.getAllTasks()) {
+            int colorRes = 0;
+            switch (plan.getPriority()) {
+                case 1:
+                    colorRes = R.color.low_priority;
+                    break;
+                case 2:
+                    colorRes = R.color.medium_priority;
+                    break;
+                case 3:
+                    colorRes = R.color.high_priority;
+                    break;
+            }
+            events.add(new Event(ContextCompat.getColor(getContext(), colorRes), plan.getTimestamp()));
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close();
-    }
-
-    @Override
-    public void onDayClick(Date dateClicked) {
-
-        lastDateSelected = toCalendar(dateClicked);
-        setToolbarTitle(title_date.format(dateClicked.getTime()));
-        // Get Selected Date @12:00 AM
-        Calendar selectedDateStart = Calendar.getInstance();
-        selectedDateStart.setTime(dateClicked);
-        selectedDateStart.set(Calendar.HOUR, 0);
-        selectedDateStart.set(Calendar.MINUTE, 0);
-        selectedDateStart.set(Calendar.SECOND, 0);
-        selectedDateStart.set(Calendar.MILLISECOND, 0);
-        selectedDateStart.set(Calendar.AM_PM, Calendar.AM);
-
-        // Get Selected Date @11:59 PM
-        Calendar selectedDateEnd = Calendar.getInstance();
-        selectedDateEnd.setTime(dateClicked);
-        selectedDateEnd.set(Calendar.HOUR, 11);
-        selectedDateEnd.set(Calendar.MINUTE, 59);
-        selectedDateEnd.set(Calendar.SECOND, 59);
-        selectedDateEnd.set(Calendar.MILLISECOND, 999);
-        selectedDateEnd.set(Calendar.AM_PM, Calendar.PM);
-
-        RealmResults<Plan> plans = getResultsInTime(selectedDateStart.getTime().getTime(), selectedDateEnd.getTime().getTime());
-        calendarPlansAdapter.replacePlansList(plans);
-
-    }
-
-    @Override
-    public void onMonthScroll(Date firstDayOfNewMonth) {
-        setToolbarTitle(title_date.format(firstDayOfNewMonth.getTime()));
-        setupCalendarView(toCalendar(firstDayOfNewMonth));
+        calendarView.removeAllEvents();
+        calendarView.addEvents(events);
     }
 
     @Override
@@ -194,72 +180,21 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         animateChevron();
     }
 
-    public void addCalendarEvents(RealmResults<Plan> plans){
-        List<Event> events = new ArrayList<>();
-        events.clear();
-        for(Plan plan: plans){
-            int colorRes = 0;
-            switch(plan.getPriority()){
-                case 1:
-                    colorRes = R.color.low_priority;
-                    break;
-                case 2:
-                    colorRes = R.color.medium_priority;
-                    break;
-                case 3:
-                    colorRes = R.color.high_priority;
-                    break;
-            }
-            events.add(new Event(ContextCompat.getColor(getContext(),colorRes), plan.getTimestamp()));
-        }
-        calendarView2.removeAllEvents();
-        calendarView2.addEvents(events);
+    @Override
+    public void onDayClick(Date dateClicked) {
+        lastDateSelected = toCalendar(dateClicked);
+        setUpView();
     }
 
-    public void setupCalendarView(Calendar calendar) {
-
-        lastDateSelected = calendar;
-        setToolbarTitle(Constants.getShortDate(calendar.getTimeInMillis()));
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.AM_PM, Calendar.AM);
-
-        Calendar nextDay = Calendar.getInstance();
-        nextDay.setTime(calendar.getTime());
-        nextDay.set(Calendar.HOUR, 11);
-        nextDay.set(Calendar.MINUTE, 59);
-        nextDay.set(Calendar.SECOND, 59);
-        nextDay.set(Calendar.MILLISECOND, 999);
-        nextDay.set(Calendar.AM_PM, Calendar.PM);
-
-        calendarPlansAdapter = new PlanItemAdapter(getActivity(), getResultsInTime(calendar.getTimeInMillis(), nextDay.getTimeInMillis()));
-        calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
-        plansList.setAdapter(calendarPlansAdapter);
-        addCalendarEvents(getAllTasks());
+    @Override
+    public void onMonthScroll(Date firstDayOfNewMonth) {
+        lastDateSelected = toCalendar(firstDayOfNewMonth);
+        setUpView();
     }
 
-    public RealmResults<Plan> getAllTasks(){
-        return realm.where(Plan.class).findAllSorted("id", Sort.DESCENDING);
-    }
-
-    public RealmResults<Plan> getResultsInTime(long selectedDateStart, long selectedDateEnd){
-        return realm.where(Plan.class).greaterThanOrEqualTo("timestamp", selectedDateStart).lessThan("timestamp", selectedDateEnd).findAllSorted("id", Sort.DESCENDING);
-    }
-
-    public static Calendar toCalendar(Date date){
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal;
-    }
-
-    public void setToolbarTitle(String title){
-        toolbar_title.setText(title);
-    }
-
-    public void animateChevron(){
-        toolbar_indicator.animate().rotation(isExpanded ? 0 : 180).setDuration(getResources().getInteger(android.R.integer.config_shortAnimTime));
+    @Override
+    public void onRefreshEvents() {
+        refreshEvents();
     }
 
     @Override
@@ -268,12 +203,9 @@ public class CalendarTasksFragment extends Fragment implements CompactCalendarVi
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         calendar.set(Calendar.MONTH, monthOfYear);
-        calendarView2.setCurrentDate(calendar.getTime());
-        setupCalendarView(calendar);
+        calendarView.setCurrentDate(calendar.getTime());
+        lastDateSelected = calendar;
+        setUpView();
     }
 
-    @Override
-    public void onRefreshEvents() {
-        addCalendarEvents(getAllTasks());
-    }
 }

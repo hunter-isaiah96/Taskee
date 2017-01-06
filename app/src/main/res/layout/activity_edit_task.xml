@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="RtlSymmetry"
-    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
@@ -30,124 +27,125 @@
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/edit_task_bottom_menu"
         android:layout_below="@+id/toolbar">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/edit_task_image_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fff"
-                android:orientation="vertical"
-                >
+                android:visibility="gone">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/edit_task_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop" />
 
                 <FrameLayout
-                    android:id="@+id/edit_task_image_holder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:id="@+id/edit_task_remove_image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp">
 
                     <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/edit_task_image"
+
                         android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:scaleType="centerCrop" />
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:src="@drawable/zzz_close_circle"
+                        android:tint="@android:color/white" />
 
-                    <FrameLayout
-                        android:id="@+id/edit_task_remove_image"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_margin="10dp">
-
-                        <android.support.v7.widget.AppCompatImageView
-
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="start"
-                            android:src="@drawable/zzz_close_circle"
-                            android:tint="@android:color/white" />
-
-                        <android.support.v7.widget.AppCompatImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="start"
-                            android:src="@drawable/zzz_close_circle_outline"
-                            android:tint="?colorPrimary" />
-
-                    </FrameLayout>
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:src="@drawable/zzz_close_circle_outline"
+                        android:tint="?colorPrimary" />
 
                 </FrameLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+            </FrameLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/item_section_spacing"
-                        android:orientation="horizontal">
+            <com.ihunter.taskee.ui.CustomEditText
+                android:id="@+id/edit_task_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/edit_task_image_holder"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_toStartOf="@+id/edit_task_date"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/word_title"
+                android:inputType="textMultiLine|textCapSentences"
+                android:padding="0dp"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="16sp"
+                app:fontName="@string/lato_regular" />
 
-                        <com.ihunter.taskee.ui.CustomEditText
-                            android:id="@+id/edit_task_title"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:gravity="center_vertical"
-                            android:hint="@string/word_title"
-                            android:inputType="textMultiLine|textCapSentences"
-                            android:paddingEnd="10dp"
-                            android:textSize="16sp"
-                            app:fontName="@string/lato_regular"/>
+            <com.ihunter.taskee.ui.CustomTextView
+                android:id="@+id/edit_task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/plan_note"
+                android:layout_alignBottom="@+id/edit_task_title"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/edit_task_title"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:text="@string/line_select_date"
+                android:textColor="@color/textColorSecondary"
+                app:fontName="@string/lato_regular"
+                android:textSize="12sp" />
 
-                        <com.ihunter.taskee.ui.CustomTextView
-                            android:id="@+id/edit_task_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical"
-                            android:text="@string/line_select_date"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="12sp"
-                            app:fontName="@string/lato_regular"/>
-                    </LinearLayout>
+            <com.ihunter.taskee.ui.CustomEditText
+                android:id="@+id/edit_task_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/edit_task_title"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/word_note"
+                android:inputType="textMultiLine|textCapSentences"
+                android:padding="0dp"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="12sp"
+                app:fontName="@string/lato_regular" />
 
-                    <com.ihunter.taskee.ui.CustomEditText
-                        android:id="@+id/edit_task_note"
-                        style="@style/TaskViewDescriptionTime"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:gravity="top|start"
-                        android:hint="@string/word_note"
-                        android:inputType="textMultiLine|textCapSentences" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/edit_task_sub_task_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-            </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/edit_task_sub_task_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edit_task_note"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/edit_task_priority_tag"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_gravity="end"
-                android:src="@drawable/priority_triangle"
-                android:tint="@color/low_priority" />
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:tint="@color/low_priority"
+                app:srcCompat="@drawable/priority_triangle" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
     </ScrollView>
 

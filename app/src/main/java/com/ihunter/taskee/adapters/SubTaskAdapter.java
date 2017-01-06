@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.data.SubTask;
+import com.ihunter.taskee.interfaces.SubTaskItemInterface;
 import com.ihunter.taskee.viewholders.SubTaskViewHolder;
 
 import io.realm.RealmList;
@@ -16,7 +17,7 @@ import io.realm.RealmList;
  * Created by Master Bison on 12/5/2016.
  */
 
-public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> {
+public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> implements SubTaskItemInterface{
 
     RealmList<SubTask> list;
     Context context;
@@ -63,4 +64,10 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> {
         return list.size();
     }
 
+    @Override
+    public void onRemoveSubTask(int position) {
+        getSubTasks().remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getSubTasks().size());
+    }
 }
