@@ -9,8 +9,10 @@ import android.view.ViewGroup;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.data.SubTask;
 import com.ihunter.taskee.interfaces.SubTaskItemInterface;
+import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.viewholders.SubTaskViewHolder;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 
 /**
@@ -21,10 +23,18 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> impl
 
     RealmList<SubTask> list;
     Context context;
+    RealmService realmService;
+    Realm realm;
+    boolean canEditCompletion = false;
+    boolean canRemoveItems = false;
 
-    public SubTaskAdapter(Context context) {
+    public SubTaskAdapter(Context context, boolean canEditCompletion, boolean canRemoveItems) {
         list = new RealmList<>();
         this.context = context;
+        this.canEditCompletion = canEditCompletion;
+        this.canRemoveItems = canRemoveItems;
+        realmService = new RealmService();
+        realm = realmService.getRealm();
     }
 
     @Override
@@ -35,7 +45,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> impl
 
     @Override
     public void onBindViewHolder(final SubTaskViewHolder holder, int position) {
-        holder.bind(list.get(position));
+        holder.bind(list.get(position), canEditCompletion, canRemoveItems);
     }
 
     public void addTask(String string) {
@@ -66,8 +76,17 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> impl
 
     @Override
     public void onRemoveSubTask(int position) {
+        realm.beginTransaction();
         getSubTasks().remove(position);
+        realm.commitTransaction();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getSubTasks().size());
+    }
+
+    @Override
+    public void onSubTaskCompleationChange(int position, boolean checked) {
+        realm.beginTransaction();
+        getSubTasks().get(position).setCompleted(checked);
+        realm.commitTransaction();
     }
 }

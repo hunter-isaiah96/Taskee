@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.activities.TaskEditorActivity;
+import com.ihunter.taskee.adapters.SubTaskAdapter;
 import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.dialogs.ConfirmDialog;
 import com.ihunter.taskee.interfaces.PlanItemInterface;
@@ -48,6 +50,9 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.plan_image)
     AppCompatImageView planImage;
 
+    @BindView(R.id.plan_sub_tasks)
+    RecyclerView planSubTasks;
+
     public PlanItemViewHolder(View v, PlanItemInterface planItemView) {
         super(v);
         ButterKnife.bind(this, v);
@@ -56,6 +61,13 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Task plan, int count) {
+        if(plan.getSubTasks().size() != 0){
+            SubTaskAdapter adapter = new SubTaskAdapter(itemView.getContext(), true, false);
+            adapter.setSubTaskList(plan.getSubTasks());
+            planSubTasks.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
+            planSubTasks.setAdapter(adapter);
+            planSubTasks.setVisibility(VISIBLE);
+        }
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (getAdapterPosition() == count - 1) {
             layoutParams.bottomMargin = (int) itemView.getContext().getResources().getDimension(R.dimen.item_margin);
@@ -112,12 +124,7 @@ public class PlanItemViewHolder extends RecyclerView.ViewHolder {
                         .setPositiveButton(v.getContext().getString(R.string.word_yes), new ConfirmDialog.OnPositiveButton() {
                             @Override
                             public void onClick(View v, Dialog dialog) {
-                                realm.executeTransaction(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        planItemView.onItemDelete(getAdapterPosition());
-                                    }
-                                });
+                                planItemView.onItemDelete(getAdapterPosition());
                                 dialog.dismiss();
                             }
                         })

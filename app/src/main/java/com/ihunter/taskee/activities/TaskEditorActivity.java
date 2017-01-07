@@ -1,9 +1,12 @@
 package com.ihunter.taskee.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +46,7 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import butterknife.OnTextChanged;
 
+import static com.ihunter.taskee.Constants.EXTERNAL_STORAGE_RESULT_CODE;
 import static com.ihunter.taskee.Constants.PICKFILE_RESULT_CODE;
 
 public class TaskEditorActivity extends AppCompatActivity implements TaskEditorInterface, TextView.OnEditorActionListener {
@@ -103,17 +107,11 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
 
     @OnClick(R.id.edit_task_pick_image)
     protected void onPickImageClick() {
-        Intent intent;
-        if (Build.VERSION.SDK_INT < 19){
-            intent = new Intent();
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            startActivityForResult(intent, PICKFILE_RESULT_CODE);
-        } else {
-            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*");
-            startActivityForResult(intent, PICKFILE_RESULT_CODE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_RESULT_CODE);
+            return;
+        }else{
+            openImagePicker();
         }
     }
 
@@ -156,7 +154,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         presenter = new TaskEditorPresenter(this);
         adapter = new PriorityAdapter(this);
         spinner.setAdapter(adapter);
-        subTaskAdapter = new SubTaskAdapter(getApplicationContext());
+        subTaskAdapter = new SubTaskAdapter(getApplicationContext(), false, true);
         subTaskRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         subTaskRecyclerView.setAdapter(subTaskAdapter);
         editTaskAddSubTask.setOnEditorActionListener(this);
@@ -167,6 +165,32 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorI
         }else{
             toolbarTitle.setText(getString(R.string.line_new_task));
             plan = new Task();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case EXTERNAL_STORAGE_RESULT_CODE:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    openImagePicker();
+                }
+                break;
+        }
+    }
+
+    public void openImagePicker(){
+        Intent intent;
+        if (Build.VERSION.SDK_INT < 19){
+            intent = new Intent();
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICKFILE_RESULT_CODE);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICKFILE_RESULT_CODE);
         }
     }
 

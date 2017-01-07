@@ -2,12 +2,6 @@
 <resources>
 
     <!-- App Colors -->
-    <!--<color name="colorPrimary">#2b2b2b</color>-->
-    <!--<color name="colorPrimaryDark">#202020</color>-->
-    <!--<color name="colorPrimaryLight">#484848</color>-->
-    <!--<color name="colorAccent">#5b5b5b</color>-->
-
-    <!-- Test Colors-->
     <color name="colorPrimary">#09314B</color>
     <color name="colorPrimaryDark">#07263B</color>
     <color name="colorPrimaryLight">#536F81</color>

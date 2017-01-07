@@ -6,4 +6,5 @@ package com.ihunter.taskee.interfaces;
 
 public interface SubTaskItemInterface {
     void onRemoveSubTask(int position);
+    void onSubTaskCompleationChange(int position, boolean checked);
 }

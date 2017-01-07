@@ -51,11 +51,7 @@ public class AllTasksFragment extends Fragment {
         ButterKnife.bind(this, view);
         ((MainActivity)getActivity()).setToolbar(toolbar);
         setToolbarTitle(getString(R.string.line_all_tasks));
-        adapter = new PlanItemAdapter(getActivity());
-        allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        allTasksView.setEmptyView(todoListEmptyView);
-        allTasksView.setHasFixedSize(true);
-        allTasksView.setAdapter(adapter);
+        setAdapterByDate();
         return view;
     }
 
@@ -67,6 +63,14 @@ public class AllTasksFragment extends Fragment {
 
     public void refreshList(){
         adapter.replacePlansList(realmService.getAllTasks());
+    }
+
+    public void setAdapterByDate(){
+        adapter = new PlanItemAdapter(getActivity());
+        allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        allTasksView.setEmptyView(todoListEmptyView);
+        allTasksView.setHasFixedSize(true);
+        allTasksView.setAdapter(adapter);
     }
 
     public void setToolbarTitle(String title){

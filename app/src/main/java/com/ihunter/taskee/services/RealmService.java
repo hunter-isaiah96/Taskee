@@ -25,8 +25,12 @@ public class RealmService {
         emptyArray = new ArrayList();
     }
 
+    public Realm getRealm() {
+        return realm;
+    }
+
     public RealmResults<Task> getAllTasks(){
-        return realm.where(Task.class).findAllSorted("id", Sort.DESCENDING);
+        return realm.where(Task.class).findAllSorted("timestamp", Sort.ASCENDING);
     }
 
     public RealmResults<Task> getResultsOnDay(long date){

@@ -44,4 +44,5 @@ dependencies {
     debugCompile "com.github.brianPlummer:tinydancer:0.1.0"
     releaseCompile "com.github.brianPlummer:tinydancer-noop:0.1.0"
     testCompile "com.github.brianPlummer:tinydancer-noop:0.1.0"
+    compile 'com.github.zhukic:sectioned-recyclerview:0.2.2'
 }
