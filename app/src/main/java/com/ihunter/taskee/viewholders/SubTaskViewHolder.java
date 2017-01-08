@@ -21,8 +21,6 @@ import butterknife.OnClick;
 
 public class SubTaskViewHolder extends RecyclerView.ViewHolder{
 
-    SubTask subTask;
-
     @BindView(R.id.sub_task_title)
     CustomTextView subTaskTitle;
 
@@ -40,7 +38,7 @@ public class SubTaskViewHolder extends RecyclerView.ViewHolder{
         this.subTaskItemInterface = subTaskItemInterface;
     }
 
-    public void bind(SubTask subTask, boolean canEditCompletion, boolean canRemoveItems){
+    public void bind(final SubTask subTask, final boolean canEditCompletion, boolean canRemoveItems){
         subTaskTitle.setText(subTask.getTask());
         planCompletion.setChecked(subTask.isCompleted());
         if(!canEditCompletion){
@@ -50,6 +48,14 @@ public class SubTaskViewHolder extends RecyclerView.ViewHolder{
             removeSubTask.setVisibility(View.GONE);
         }
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(canEditCompletion){
+                    planCompletion.setChecked(!subTask.isCompleted());
+                }
+            }
+        });
     }
 
     @OnCheckedChanged(R.id.sub_task_completion)
