@@ -19,21 +19,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.MainActivity;
-import com.ihunter.taskee.adapters.PlanItemAdapter;
-import com.ihunter.taskee.data.Task;
-import com.ihunter.taskee.interfaces.CalendarTasksFragmentInterface;
+import com.ihunter.taskee.adapters.TaskItemAdapter;
+import com.ihunter.taskee.interfaces.CalendarTasksFragmentView;
 import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,11 +39,11 @@ import butterknife.OnClick;
  * Created by Master Bison on 1/5/2017.
  */
 
-public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener, CompactCalendarView.CompactCalendarViewListener, CalendarTasksFragmentInterface, DatePickerDialog.OnDateSetListener {
+public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener, CompactCalendarView.CompactCalendarViewListener, CalendarTasksFragmentView, DatePickerDialog.OnDateSetListener {
 
 
     private RealmService realmService;
-    private PlanItemAdapter calendarPlansAdapter;
+    private TaskItemAdapter calendarPlansAdapter;
     private boolean isExpanded = true;
     private Calendar lastDateSelected;
 
@@ -89,7 +85,7 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
         appBar.setExpanded(true);
         appBar.addOnOffsetChangedListener(this);
         calendarView.setListener(this);
-        calendarPlansAdapter = new PlanItemAdapter(getContext());
+        calendarPlansAdapter = new TaskItemAdapter();
         calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
         plansList.setLayoutManager(new LinearLayoutManager(getContext()));
         plansList.setAdapter(calendarPlansAdapter);
@@ -149,25 +145,25 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
     }
 
     private void refreshEvents() {
-        List<Event> events = new ArrayList<>();
-        events.clear();
-        for (Task plan : realmService.getAllTasks()) {
-            int colorRes = 0;
-            switch (plan.getPriority()) {
-                case 1:
-                    colorRes = R.color.low_priority;
-                    break;
-                case 2:
-                    colorRes = R.color.medium_priority;
-                    break;
-                case 3:
-                    colorRes = R.color.high_priority;
-                    break;
-            }
-            events.add(new Event(ContextCompat.getColor(getContext(), colorRes), plan.getTimestamp()));
-        }
-        calendarView.removeAllEvents();
-        calendarView.addEvents(events);
+//        List<Event> events = new ArrayList<>();
+//        events.clear();
+//        for (Task plan : realmService.getAllTasks()) {
+//            int colorRes = 0;
+//            switch (plan.getPriority()) {
+//                case 1:
+//                    colorRes = R.color.low_priority;
+//                    break;
+//                case 2:
+//                    colorRes = R.color.medium_priority;
+//                    break;
+//                case 3:
+//                    colorRes = R.color.high_priority;
+//                    break;
+//            }
+//            events.add(new Event(ContextCompat.getColor(getContext(), colorRes), plan.getTimestamp()));
+//        }
+//        calendarView.removeAllEvents();
+//        calendarView.addEvents(events);
     }
 
     @Override

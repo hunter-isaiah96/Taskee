@@ -8,21 +8,32 @@ import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 public class Task extends RealmObject{
+
     @PrimaryKey
-    private long id;
+    private int id;
+
+    private String color = "";
     private String title = "";
     private String note = "";
-    private long timestamp = Calendar.getInstance().getTimeInMillis();;
-    private int priority = 1;
-    private RealmList<SubTask> subTasks;
-    private boolean isCompleted =  false;
     private String image = "";
+    private RealmList<SubTask> subTasks;
+    private long timestamp = Calendar.getInstance().getTimeInMillis();
+    private boolean isCompleted =  false;
+    private boolean hasReminder = false;
 
     @Ignore
-    boolean dateSet = false;
+    private boolean dateSet = false;
 
     public Task(){
 
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public void setDateSet(boolean dateSet) {
@@ -33,11 +44,11 @@ public class Task extends RealmObject{
         return dateSet;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -55,14 +66,6 @@ public class Task extends RealmObject{
 
     public String getNote() {
         return note;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public int getPriority() {
-        return priority;
     }
 
     public void setTimestamp(long timestamp) {
@@ -96,4 +99,13 @@ public class Task extends RealmObject{
     public boolean isCompleted() {
         return isCompleted;
     }
+
+    public boolean hasReminder(){
+        return this.hasReminder;
+    }
+
+    public void setHasReminder(boolean hasReminder) {
+        this.hasReminder = hasReminder;
+    }
+
 }

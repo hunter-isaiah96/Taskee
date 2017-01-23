@@ -3,7 +3,7 @@ package com.ihunter.taskee.presenters;
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Task;
-import com.ihunter.taskee.interfaces.TaskEditorInterface;
+import com.ihunter.taskee.interfaces.TaskEditorView;
 
 import java.util.Calendar;
 
@@ -15,51 +15,46 @@ import io.realm.Realm;
 
 public class TaskEditorPresenter {
 
-    boolean inEditMode = false;
-
-    private TaskEditorInterface createTaskView;
+    private boolean inEditMode = false;
+    private TaskEditorView createTaskView;
     private Realm realm;
 
-    public TaskEditorPresenter(TaskEditorInterface createTaskView){
+    public TaskEditorPresenter(TaskEditorView createTaskView){
         this.createTaskView = createTaskView;
         realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
     }
 
-    public void setPlanDate(long time){
-        createTaskView.onPlanDateSet(time);
-    }
-
-    public void savePlan(final Task plan){
-        if(plan.getTitle().length() == 0){
-            createTaskView.onPlanValidationError(Constants.ValidationError.TITLE_ERR);
+    public void saveTask(final Task task){
+        if(task.getTitle().length() == 0){
+            createTaskView.onTaskValidationError(Constants.ValidationError.TITLE_ERR);
             return;
-        }else if(!plan.isDateSet()){
-            createTaskView.onPlanValidationError(Constants.ValidationError.DATE_ERR);
+        }else if(!task.isDateSet()){
+            createTaskView.onTaskValidationError(Constants.ValidationError.DATE_ERR);
             return;
-        }else if(!isAfterCurrentTime(plan.getTimestamp())){
-            createTaskView.onPlanValidationError(Constants.ValidationError.FUTURE_ERR);
+        }else if(!isAfterCurrentTime(task.getTimestamp())){
+            createTaskView.onTaskValidationError(Constants.ValidationError.FUTURE_ERR);
             return;
         }
 
         if(!inEditMode) {
             int num = realm.where(Task.class).max("id") == null ? 0 : (realm.where(Task.class).max("id").intValue()) + 1;
-            plan.setId(num);
+            task.setId(num);
         }
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.copyToRealmOrUpdate(plan);
+                realm.insertOrUpdate(task);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                createTaskView.onPlanSaveSuccessful();
+                createTaskView.onTaskSaveSuccessful(task.getId());
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(Throwable error) {
-                createTaskView.onPlanValidationError(Constants.ValidationError.SAVE_ERR);
+                createTaskView.onTaskValidationError(Constants.ValidationError.SAVE_ERR);
             }
         });
     }
@@ -72,10 +67,10 @@ public class TaskEditorPresenter {
         }
     }
 
-    public void editPlan(long id){
+    public void editTask(int id){
         Task plan = realm.where(Task.class).equalTo("id", id).findFirst();
         this.inEditMode = true;
-        createTaskView.onPlanForEditorMode(realm.copyFromRealm(plan));
+        createTaskView.onTaskForEditorMode(realm.copyFromRealm(plan));
     }
 
 }

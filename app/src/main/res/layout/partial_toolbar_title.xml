@@ -11,7 +11,7 @@
         android:gravity="center"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="@android:color/white"
+        android:textColor="#000"
         android:textSize="18sp"
         app:fontName="@string/lato_regular"
         />

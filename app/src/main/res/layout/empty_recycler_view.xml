@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="20dp"
-            android:text="@string/line_no_plans"
+            android:text="@string/line_no_tasks"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
             app:fontName="Lato-Bold.ttf" />

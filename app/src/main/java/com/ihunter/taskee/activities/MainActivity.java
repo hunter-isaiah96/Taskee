@@ -1,12 +1,15 @@
 package com.ihunter.taskee.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,10 +24,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-/**
- * Created by Master Bison on 12/21/2016.
- */
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if(Build.VERSION.SDK_INT >= 21) {
+            Explode anim = new Explode();
+            getWindow().setExitTransition(anim);
+        }
         changeCurrentFragment(new AllTasksFragment());
         setUpDrawer();
     }
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.plan)
     protected void planButtonClick() {
         Intent intent = new Intent(MainActivity.this, TaskEditorActivity.class);
-        startActivity(intent);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     private void changeCurrentFragment(Fragment fragment) {

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
     defaultConfig {
-        applicationId "com.ihunter.qplanningui"
+        applicationId "com.ihunter.taskee"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -25,6 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:percent:25.1.0'
     compile "com.mikepenz:iconics-core:2.8.2@aar"
@@ -39,10 +40,5 @@ dependencies {
     }
     compile 'com.wdullaer:materialdatetimepicker:3.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
-    debugCompile "com.github.brianPlummer:tinydancer:0.1.0"
-    releaseCompile "com.github.brianPlummer:tinydancer-noop:0.1.0"
-    testCompile "com.github.brianPlummer:tinydancer-noop:0.1.0"
-    compile 'com.github.zhukic:sectioned-recyclerview:0.2.2'
+    compile 'com.thebluealliance:spectrum:0.7.1'
 }

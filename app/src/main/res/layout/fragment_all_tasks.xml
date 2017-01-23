@@ -38,7 +38,9 @@
     <com.ihunter.taskee.ui.EmptyRecyclerView
         android:id="@+id/all_tasks_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:descendantFocusability="blocksDescendants"/>
 
     <include layout="@layout/empty_recycler_view" />
 

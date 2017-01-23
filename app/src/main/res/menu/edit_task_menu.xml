@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_alarm"
+        android:checkable="true"
+        android:checked="false"
+        android:icon="@drawable/alarm_drawable"
+        android:title="@string/word_save"
+        app:actionLayout="@layout/alarm_checkbox"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/save_task"
+        android:icon="@drawable/zzz_check"
+        android:title="@string/word_save"
+        app:showAsAction="ifRoom" />
+
+</menu>

@@ -33,7 +33,8 @@
     <string name="line_all_tasks">All Tasks</string>
     <string name="line_new_task">New Task</string>
     <string name="line_edit_task">Edit Task</string>
-    <string name="line_no_plans">No Tasks to Show</string>
+    <string name="line_no_tasks">No Tasks to Show</string>
+    <string name="line_task_color">No Tasks to Show</string>
 
     <string name="word_choose">Choose</string>
     <string name="word_date">Date</string>
@@ -53,5 +54,9 @@
         <item>Due Date</item>
         <item>Latest</item>
     </string-array>
+
+    <string name="shortcut_short_label">Create New Note</string>
+    <string name="shortcut_long_label">Create New Note</string>
+    <string name="shortcut_disabled_label">Create New Note</string>
 
 </resources>

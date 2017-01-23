@@ -7,22 +7,13 @@
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
+        style="@style/Toolbar"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="?colorPrimary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="?colorPrimary">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?android:selectableItemBackground"
-            android:orientation="horizontal">
-
-            <include layout="@layout/partial_toolbar_title" />
-
-        </LinearLayout>
+        <include layout="@layout/partial_toolbar_title" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -34,9 +25,10 @@
         android:layout_below="@+id/toolbar">
 
         <RelativeLayout
+            android:id="@+id/task_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
+            android:background="@color/placeholder_color"
             android:orientation="vertical"
             android:paddingBottom="20dp">
 
@@ -92,6 +84,7 @@
                 android:inputType="textMultiLine|textCapSentences"
                 android:padding="0dp"
                 android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorHint"
                 android:textSize="16sp"
                 app:fontName="@string/lato_regular" />
 
@@ -99,16 +92,16 @@
                 android:id="@+id/edit_task_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/plan_note"
+                android:layout_above="@+id/edit_task_note"
                 android:layout_alignBottom="@+id/edit_task_title"
                 android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/edit_task_title"
                 android:layout_marginEnd="20dp"
                 android:gravity="center_vertical"
                 android:text="@string/line_select_date"
-                android:textColor="@color/textColorSecondary"
-                app:fontName="@string/lato_regular"
-                android:textSize="12sp" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="12sp"
+                app:fontName="@string/lato_regular" />
 
             <com.ihunter.taskee.ui.CustomEditText
                 android:id="@+id/edit_task_note"
@@ -124,7 +117,8 @@
                 android:hint="@string/word_note"
                 android:inputType="textMultiLine|textCapSentences"
                 android:padding="0dp"
-                android:textColor="@color/textColorSecondary"
+                android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorHint"
                 android:textSize="12sp"
                 app:fontName="@string/lato_regular" />
 
@@ -135,15 +129,6 @@
                 android:layout_below="@+id/edit_task_note"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp" />
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/edit_task_priority_tag"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:tint="@color/low_priority"
-                app:srcCompat="@drawable/priority_triangle" />
 
         </RelativeLayout>
 
@@ -202,12 +187,16 @@
                 app:iiv_icon="@string/faw_calendar_o"
                 app:iiv_size="15dp" />
 
-            <Spinner
-                android:id="@+id/spinner"
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/edit_task_pick_color"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#FFFFFFFF" />
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                app:iiv_color="@color/textColorSecondary"
+                app:iiv_icon="@string/faw_paint_brush"
+                app:iiv_size="15dp" />
 
         </LinearLayout>
 

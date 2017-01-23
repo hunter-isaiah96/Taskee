@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import com.ihunter.taskee.presenters.TaskEditorPresenter;
+import com.ihunter.taskee.interfaces.TaskEditorView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
@@ -19,7 +19,7 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
 
     private Activity activity;
     private long date;
-    private TaskEditorPresenter taskEditorPresenter;
+    private TaskEditorView taskEditorView;
     private Calendar calendar;
 
     public CustomTimeDialog(Activity activity, long date) {
@@ -40,8 +40,8 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
         init();
     }
 
-    public void setTaskEditorPresenter(TaskEditorPresenter taskEditorPresenter){
-        this.taskEditorPresenter = taskEditorPresenter;
+    public void setTaskEditorPresenter(TaskEditorView taskEditorView){
+        this.taskEditorView = taskEditorView;
     }
 
     public void init(){
@@ -80,7 +80,7 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        taskEditorPresenter.setPlanDate(calendar.getTimeInMillis());
+        taskEditorView.onTaskDateSet(calendar.getTimeInMillis());
         dismiss();
     }
 

@@ -2,26 +2,48 @@
 <resources>
 
     <!-- App Colors -->
-    <color name="colorPrimary">#09314B</color>
-    <color name="colorPrimaryDark">#07263B</color>
-    <color name="colorPrimaryLight">#536F81</color>
+    <color name="colorPrimary">#fff</color>
+    <color name="colorPrimaryDark">#3e3e3e</color>
+    <color name="colorPrimaryLight">#e4e4e4</color>
     <color name="colorAccent">#19C4D8</color>
 
-    <color name="textColorPrimary">#1c1c1c</color>
-    <color name="textColorSecondary">#939393</color>
+    <color name="textColorPrimary">#fff</color>
+    <color name="textColorSecondary">#eaeaea</color>
     <color name="textColorHint">#cccccc</color>
-    <color name="colorBackground">@color/colorPrimary</color>
+    <color name="colorBackground">#ececec</color>
 
     <!-- Drawer Colors -->
-    <color name="material_drawer_background">@color/colorPrimaryDark</color>
-    <color name="material_drawer_primary_text">#fff</color>
-    <color name="material_drawer_primary_icon">#e7e7e7</color>
+    <color name="material_drawer_background">@color/colorPrimary</color>
+    <color name="material_drawer_primary_text">@color/colorPrimaryDark</color>
+    <color name="material_drawer_primary_icon">@color/colorPrimaryDark</color>
     <color name="material_drawer_selected">@color/colorPrimary</color>
-    <color name="material_drawer_selected_text">#fff</color>
+    <color name="material_drawer_selected_text">#000</color>
 
-    <!-- Urgency Colors -->
-    <color name="low_priority">#00ffc9</color>
-    <color name="medium_priority">#ffe54c</color>
-    <color name="high_priority">#ff3d3c</color>
+    <color name="placeholder_color">@color/md_red_500</color>
+
+    <array name="task_colors">
+        <item>@color/md_red_500</item>
+        <item>@color/md_pink_500</item>
+        <item>@color/md_purple_500</item>
+        <item>@color/md_deep_purple_500</item>
+        <item>@color/md_indigo_500</item>
+        <item>@color/md_blue_500</item>
+        <item>@color/md_light_blue_500</item>
+        <item>@color/md_cyan_500</item>
+        <item>@color/md_teal_500</item>
+        <item>@color/md_green_500</item>
+        <item>@color/md_light_green_500</item>
+        <item>@color/md_lime_500</item>
+        <item>@color/md_yellow_500</item>
+        <item>@color/md_amber_500</item>
+        <item>@color/md_orange_500</item>
+        <item>@color/md_deep_orange_500</item>
+        <item>@color/md_brown_500</item>
+        <item>@color/md_grey_500</item>
+        <item>@color/md_blue_grey_500</item>
+    </array>
+
+    <color name="checkbox_enabled">#fff</color>
+    <color name="checkbox_disabled">#878787</color>
 
 </resources>

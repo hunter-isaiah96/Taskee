@@ -13,12 +13,16 @@ import android.widget.LinearLayout;
 
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.MainActivity;
-import com.ihunter.taskee.adapters.PlanItemAdapter;
-import com.ihunter.taskee.services.RealmService;
+import com.ihunter.taskee.adapters.TaskItemAdapter;
+import com.ihunter.taskee.data.Task;
+import com.ihunter.taskee.interfaces.AllTasksFragmentView;
+import com.ihunter.taskee.presenters.AllTasksFragmentPresenter;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
+import com.ihunter.taskee.ui.SimpleDividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.RealmResults;
 
 import static com.ihunter.taskee.R.id.toolbar_title;
 
@@ -26,10 +30,11 @@ import static com.ihunter.taskee.R.id.toolbar_title;
  * Created by Master Bison on 12/21/2016.
  */
 
-public class AllTasksFragment extends Fragment {
+public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
 
-    PlanItemAdapter adapter;
-    RealmService realmService;
+    AllTasksFragmentPresenter presenter;
+
+    TaskItemAdapter adapter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -46,35 +51,36 @@ public class AllTasksFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        realmService = new RealmService();
         View view = inflater.inflate(R.layout.fragment_all_tasks, container, false);
         ButterKnife.bind(this, view);
         ((MainActivity)getActivity()).setToolbar(toolbar);
         setToolbarTitle(getString(R.string.line_all_tasks));
-        setAdapterByDate();
+        presenter = new AllTasksFragmentPresenter(this);
+        setupTasksList();
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        refreshList();
+        presenter.refreshAllTasks();
     }
 
-    public void refreshList(){
-        adapter.replacePlansList(realmService.getAllTasks());
-    }
-
-    public void setAdapterByDate(){
-        adapter = new PlanItemAdapter(getActivity());
+    public void setupTasksList(){
+        adapter = new TaskItemAdapter();
         allTasksView.setLayoutManager(new LinearLayoutManager(getActivity()));
         allTasksView.setEmptyView(todoListEmptyView);
         allTasksView.setHasFixedSize(true);
         allTasksView.setAdapter(adapter);
+        allTasksView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
     }
 
     public void setToolbarTitle(String title){
         toolbarTitle.setText(title);
     }
 
+    @Override
+    public void onRefreshAllTasks(RealmResults<Task> tasks) {
+        adapter.replacePlansList(tasks);
+    }
 }
