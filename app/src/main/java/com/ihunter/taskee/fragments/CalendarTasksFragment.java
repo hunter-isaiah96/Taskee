@@ -1,12 +1,10 @@
 package com.ihunter.taskee.fragments;
 
-import android.graphics.PorterDuff;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -19,17 +17,21 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.MainActivity;
 import com.ihunter.taskee.adapters.TaskItemAdapter;
-import com.ihunter.taskee.interfaces.CalendarTasksFragmentView;
+import com.ihunter.taskee.data.Task;
+import com.ihunter.taskee.interfaces.views.CalendarTasksFragmentView;
 import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +59,7 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
     AppCompatTextView toolbarTitle;
 
     @BindView(R.id.toolbar_calendar_indicator)
-    AppCompatImageView toolbarChevron;
+    View toolbarChevron;
 
     @BindView(R.id.toolbar_calendar)
     CompactCalendarView calendarView;
@@ -77,20 +79,14 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        realmService = new RealmService();
+        realmService = new RealmService(getActivity());
         lastDateSelected = Calendar.getInstance();
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         ButterKnife.bind(this, view);
-        ((MainActivity) getActivity()).setToolbar(toolbar);
-        appBar.setExpanded(true);
-        appBar.addOnOffsetChangedListener(this);
+        setupToolbar();
+        setupAppBar();
+        setupPlansList();
         calendarView.setListener(this);
-        calendarPlansAdapter = new TaskItemAdapter();
-        calendarPlansAdapter.setCalendarTaskFragmentInterface(this);
-        plansList.setLayoutManager(new LinearLayoutManager(getContext()));
-        plansList.setAdapter(calendarPlansAdapter);
-        todoListEmptyView.findViewById(R.id.empty_image).setVisibility(View.GONE);
-        plansList.setEmptyView(todoListEmptyView);
         refreshEvents();
         return view;
     }
@@ -105,7 +101,7 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.calendar_view_menu, menu);
-        menu.findItem(R.id.select_date).getIcon().setColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN);
+//        menu.findItem(R.id.select_date).getIcon().setColorFilter(ContextCompat.getColor(getContext(), android.R.color.white), PorterDuff.Mode.SRC_IN);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -127,11 +123,29 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
 
     private void setUpView() {
         calendarPlansAdapter.replacePlansList(realmService.getResultsOnDay(lastDateSelected.getTimeInMillis()));
-        setToolbarTitle(Constants.getShortDate(lastDateSelected.getTimeInMillis()));
     }
 
     private void setToolbarTitle(String string) {
         toolbarTitle.setText(string);
+    }
+
+    private void setupToolbar(){
+        ((MainActivity) getActivity()).setToolbar(toolbar);
+        setToolbarTitle(Constants.getShortDate(lastDateSelected.getTimeInMillis()));
+    }
+
+    private void setupAppBar(){
+        appBar.setExpanded(true);
+        appBar.addOnOffsetChangedListener(this);
+    }
+
+    private void setupPlansList(){
+        todoListEmptyView.findViewById(R.id.empty_image).setVisibility(View.GONE);
+        calendarPlansAdapter = new TaskItemAdapter(getActivity());
+        calendarPlansAdapter.setCalendarTaskFragmentView(this);
+        plansList.setLayoutManager(new LinearLayoutManager(getContext()));
+        plansList.setAdapter(calendarPlansAdapter);
+        plansList.setEmptyView(todoListEmptyView);
     }
 
     private void animateChevron() {
@@ -145,25 +159,13 @@ public class CalendarTasksFragment extends Fragment implements AppBarLayout.OnOf
     }
 
     private void refreshEvents() {
-//        List<Event> events = new ArrayList<>();
-//        events.clear();
-//        for (Task plan : realmService.getAllTasks()) {
-//            int colorRes = 0;
-//            switch (plan.getPriority()) {
-//                case 1:
-//                    colorRes = R.color.low_priority;
-//                    break;
-//                case 2:
-//                    colorRes = R.color.medium_priority;
-//                    break;
-//                case 3:
-//                    colorRes = R.color.high_priority;
-//                    break;
-//            }
-//            events.add(new Event(ContextCompat.getColor(getContext(), colorRes), plan.getTimestamp()));
-//        }
-//        calendarView.removeAllEvents();
-//        calendarView.addEvents(events);
+        List<Event> events = new ArrayList<>();
+        events.clear();
+        for (Task plan : realmService.getAllTasks()) {
+            events.add(new Event(Color.parseColor("#" + plan.getColor()), plan.getTimestamp()));
+        }
+        calendarView.removeAllEvents();
+        calendarView.addEvents(events);
     }
 
     @Override

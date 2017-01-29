@@ -1,9 +1,8 @@
 package com.ihunter.taskee.presenters;
 
 import com.ihunter.taskee.Constants;
-import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Task;
-import com.ihunter.taskee.interfaces.TaskEditorView;
+import com.ihunter.taskee.interfaces.views.TaskEditorView;
 
 import java.util.Calendar;
 
@@ -19,37 +18,38 @@ public class TaskEditorPresenter {
     private TaskEditorView createTaskView;
     private Realm realm;
 
-    public TaskEditorPresenter(TaskEditorView createTaskView){
+    public TaskEditorPresenter(TaskEditorView createTaskView, Realm realm){
         this.createTaskView = createTaskView;
-        realm = Realm.getInstance(TaskeeApplication.getRealmConfiugration());
+        this.realm = realm;
     }
 
-    public void saveTask(final Task task){
-        if(task.getTitle().length() == 0){
+    public void saveTask(Task task){
+        final Task newTask = task;
+        newTask.setTitle(newTask.getTitle().trim());
+        if(newTask.getTitle().trim().isEmpty()){
             createTaskView.onTaskValidationError(Constants.ValidationError.TITLE_ERR);
             return;
-        }else if(!task.isDateSet()){
+        }else if(!newTask.isDateSet()){
             createTaskView.onTaskValidationError(Constants.ValidationError.DATE_ERR);
             return;
-        }else if(!isAfterCurrentTime(task.getTimestamp())){
+        }else if(!isAfterCurrentTime(newTask.getTimestamp())){
             createTaskView.onTaskValidationError(Constants.ValidationError.FUTURE_ERR);
             return;
         }
-
         if(!inEditMode) {
             int num = realm.where(Task.class).max("id") == null ? 0 : (realm.where(Task.class).max("id").intValue()) + 1;
-            task.setId(num);
+            newTask.setId(num);
         }
 
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                realm.insertOrUpdate(task);
+                realm.insertOrUpdate(newTask);
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                createTaskView.onTaskSaveSuccessful(task.getId());
+                createTaskView.onTaskSaveSuccessful(newTask.getId());
             }
         }, new Realm.Transaction.OnError() {
             @Override

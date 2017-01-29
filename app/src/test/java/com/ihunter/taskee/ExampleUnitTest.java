@@ -9,6 +9,9 @@ import org.junit.Test;
  */
 public class ExampleUnitTest {
     @Test
-    public void useSet() throws Exception{
+    public void test() throws Exception{
+        String text = "  This is a text    ";
+        text = text.trim();
+        System.out.println(text);
     }
 }

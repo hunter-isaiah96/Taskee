@@ -13,13 +13,14 @@
         android:gravity="center"
         android:id="@+id/top_dialog">
 
-        <android.support.v7.widget.AppCompatImageView
+        <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/dialog_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/zzz_view_list"
             android:tint="@android:color/white"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            app:iiv_icon="@string/faw_pencil"
+            app:iiv_color="@color/white"/>
 
     </LinearLayout>
 

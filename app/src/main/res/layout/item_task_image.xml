@@ -56,7 +56,9 @@
         android:text="@string/placeholder_lorem"
         android:textColor="@color/textColorPrimary"
         android:textSize="12sp"
-        app:fontName="@string/lato_regular" />
+        app:fontName="@string/lato_regular"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/task_sub_tasks"

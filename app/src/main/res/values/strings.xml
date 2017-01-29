@@ -4,8 +4,9 @@
 
     <string name="drawer_all_tasks">All Tasks</string>
     <string name="drawer_calendar">Calendar</string>
-    <string name="drawer_state_open">Open</string>
-    <string name="drawer_state_closed">Closed</string>
+    <string name="drawer_settings">Settings</string>
+
+    <string name="ellipses">&#8230;</string>
 
     <string name="edit_task_title_error">Please enter a title &#8230;</string>
     <string name="edit_task_date_error">Please set a due date &#8230;</string>
@@ -35,6 +36,7 @@
     <string name="line_edit_task">Edit Task</string>
     <string name="line_no_tasks">No Tasks to Show</string>
     <string name="line_task_color">No Tasks to Show</string>
+    <string name="line_add_note">Add a Note</string>
 
     <string name="word_choose">Choose</string>
     <string name="word_date">Date</string>

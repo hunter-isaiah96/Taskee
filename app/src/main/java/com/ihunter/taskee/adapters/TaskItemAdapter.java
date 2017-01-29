@@ -1,31 +1,36 @@
 package com.ihunter.taskee.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.ihunter.taskee.R;
+import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Task;
-import com.ihunter.taskee.interfaces.CalendarTasksFragmentView;
-import com.ihunter.taskee.interfaces.TaskItemAdapterInteractor;
+import com.ihunter.taskee.interfaces.interactors.TaskItemAdapterInteractor;
+import com.ihunter.taskee.interfaces.views.CalendarTasksFragmentView;
 import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.viewholders.TaskItemImageViewHolder;
 import com.ihunter.taskee.viewholders.TaskItemViewHolder;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
+
 import static com.ihunter.taskee.Constants.TYPE_GROUP;
 import static com.ihunter.taskee.Constants.TYPE_IMAGE;
 
 public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements TaskItemAdapterInteractor {
 
+    private Realm realm;
     private RealmResults<Task> tasksList;
-    private RealmService realmService;
-    private CalendarTasksFragmentView calendarInterface = null;
+    private CalendarTasksFragmentView calendarView = null;
 
-    public TaskItemAdapter() {
-        this.realmService = new RealmService();
-        tasksList = realmService.getEmptyResults();
+    public TaskItemAdapter(Activity activity) {
+        this.realm = TaskeeApplication.get(activity).getRealm();
+        this.tasksList = new RealmService(activity).getEmptyResults();
     }
 
     @Override
@@ -63,18 +68,20 @@ public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 taskItemImageViewHolder.bind(tasksList.get(position));
                 break;
         }
-//        boolean shouldShowHeader = false;
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(plansList.get(position).getTimestamp());
-//        Calendar calendar2 = Calendar.getInstance();
-//        if(position > 0) {
-//            calendar2.setTimeInMillis(plansList.get(position - 1).getTimestamp());
-//        }
-//        if (position == 0 || position > 0 && !Constants.isSameMonthOfYear(calendar, calendar2)){
-//            shouldShowHeader = true;
-//        }else if(position > 0 && Constants.isSameMonthOfYear(calendar, calendar2)){
-//            shouldShowHeader = false;
-//        }
+        /*
+            boolean shouldShowHeader = false;
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(plansList.get(position).getTimestamp());
+            Calendar calendar2 = Calendar.getInstance();
+            if(position > 0) {
+                calendar2.setTimeInMillis(plansList.get(position - 1).getTimestamp());
+            }
+            if (position == 0 || position > 0 && !Constants.isSameMonthOfYear(calendar, calendar2)){
+                shouldShowHeader = true;
+            }else if(position > 0 && Constants.isSameMonthOfYear(calendar, calendar2)){
+                shouldShowHeader = false;
+            }
+        */
     }
 
     @Override
@@ -91,21 +98,19 @@ public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
-    public void setCalendarTaskFragmentInterface(CalendarTasksFragmentView calendarInterface) {
-        this.calendarInterface = calendarInterface;
+    public void setCalendarTaskFragmentView(CalendarTasksFragmentView calendarView) {
+        this.calendarView = calendarView;
     }
 
     @Override
     public void onItemDelete(int position) {
-        Realm realm = Realm.getInstance(realmService.getRealmConfiugration());
         realm.beginTransaction();
         getPlansList().deleteFromRealm(position);
         realm.commitTransaction();
-        realm.close();
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, getPlansList().size());
-        if (calendarInterface != null) {
-            calendarInterface.onRefreshEvents();
+        if (calendarView != null) {
+            calendarView.onRefreshEvents();
         }
     }
 }

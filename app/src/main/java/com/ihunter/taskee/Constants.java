@@ -10,6 +10,8 @@ public class Constants {
     public static final int TYPE_IMAGE = 0;
     public static final int TYPE_GROUP = 1;
 
+    public static final int REVEAL_DURATION = 200;
+
     public enum ValidationError{TITLE_ERR, DATE_ERR, FUTURE_ERR, SAVE_ERR}
 
     private static final SimpleDateFormat fullDateTime = new SimpleDateFormat("MMM d, yyyy - h:mma", Locale.getDefault());

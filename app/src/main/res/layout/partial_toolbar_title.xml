@@ -6,14 +6,7 @@
 
     <com.ihunter.taskee.ui.CustomTextView
         android:id="@id/toolbar_title"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="#000"
-        android:textSize="18sp"
-        app:fontName="@string/lato_regular"
+        style="@style/ToolbarTitle"
         />
 
 </merge>

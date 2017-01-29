@@ -38,7 +38,7 @@
                     app:compactCalendarCurrentDayBackgroundColor="?attr/colorPrimaryDark"
                     app:compactCalendarCurrentSelectedDayBackgroundColor="?attr/colorAccent"
                     app:compactCalendarTargetHeight="200dp"
-                    app:compactCalendarTextColor="#fff"
+                    app:compactCalendarTextColor="#8f8f8f"
                     app:compactCalendarTextSize="12sp" />
 
             </LinearLayout>
@@ -57,13 +57,13 @@
 
                     <include layout="@layout/partial_toolbar_title" />
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <com.mikepenz.iconics.view.IconicsImageView
                         android:id="@+id/toolbar_calendar_indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/zzz_chevron_up"
-                        android:tint="@android:color/white" />
+                        app:iiv_icon="@string/faw_chevron_up"
+                        app:iiv_color="@color/white" />
 
                 </LinearLayout>
 

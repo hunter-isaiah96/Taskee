@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <com.mikepenz.iconics.view.IconicsImageView
         android:id="@+id/plan"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
@@ -17,7 +19,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/fab"
         android:padding="@dimen/fab_padding"
-        android:src="@drawable/zzz_pencil"
-        android:tint="@android:color/white" />
+        app:iiv_icon="@string/faw_pencil"
+        app:iiv_color="@color/white" />
 
 </FrameLayout>

@@ -1,11 +1,7 @@
-package com.ihunter.taskee.interfaces;
+package com.ihunter.taskee.interfaces.views;
 
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.data.Task;
-
-/**
- * Created by Master Bison on 12/26/2016.
- */
 
 public interface TaskEditorView {
 
@@ -13,5 +9,6 @@ public interface TaskEditorView {
     void onTaskSaveSuccessful(int id);
     void onTaskForEditorMode(Task plan);
     void onTaskDateSet(long time);
+    void onSubTaskAdded();
 
 }

@@ -1,31 +1,28 @@
 package com.ihunter.taskee.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.data.SubTask;
-import com.ihunter.taskee.interfaces.SubTaskItemAdapterInteractor;
+import com.ihunter.taskee.interfaces.interactors.SubTaskItemAdapterInteractor;
+import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.viewholders.SubTaskViewHolder;
-
 import io.realm.Realm;
 import io.realm.RealmList;
-
-/**
- * Created by Master Bison on 12/5/2016.
- */
 
 public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> implements SubTaskItemAdapterInteractor {
 
     private RealmList<SubTask> list;
     private RealmService realmService;
+    private TaskEditorView taskEditorView;
 
-    public SubTaskAdapter() {
+    public SubTaskAdapter(Activity activity) {
         list = new RealmList<>();
-        realmService = new RealmService();
+        realmService = new RealmService(activity);
     }
 
     @Override
@@ -45,6 +42,9 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> impl
         subTask.setTask(string);
         list.add(subTask);
         notifyDataSetChanged();
+        if (taskEditorView != null) {
+            taskEditorView.onSubTaskAdded();
+        }
     }
 
     public RealmList<SubTask> getSubTasks() {
@@ -54,6 +54,10 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskViewHolder> impl
     public void setSubTaskList(RealmList<SubTask> subTasks){
         this.list = subTasks;
         notifyDataSetChanged();
+    }
+
+    public void setTaskEditorView(TaskEditorView taskEditorView){
+        this.taskEditorView = taskEditorView;
     }
 
     @Override

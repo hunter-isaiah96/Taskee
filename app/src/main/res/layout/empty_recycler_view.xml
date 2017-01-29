@@ -12,12 +12,12 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true">
 
-        <android.support.v7.widget.AppCompatImageView
+        <com.mikepenz.iconics.view.IconicsImageView
             android:id="@+id/empty_image"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:src="@drawable/zzz_close_circle"
-            android:tint="@color/colorAccent" />
+            app:iiv_icon="@string/faw_pencil"
+            app:iiv_color="?colorAccent" />
 
         <com.ihunter.taskee.ui.CustomTextView
             android:layout_width="match_parent"

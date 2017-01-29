@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
-    <shortcut
-        android:enabled="true"
-        android:icon="@drawable/zzz_plus"
-        android:shortcutId="shortcut_name"
-        android:shortcutShortLabel="@string/shortcut_short_label">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.ihunter.taskee"
-            android:targetClass="com.ihunter.taskee.activities.TaskEditorActivity" />
-        <categories android:name="android.shortcut.conversation" />
-    </shortcut>
+    <!--<shortcut-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@drawable/zzz_plus"-->
+        <!--android:shortcutId="shortcut_name"-->
+        <!--android:shortcutShortLabel="@string/shortcut_short_label">-->
+        <!--<intent-->
+            <!--android:action="android.intent.action.VIEW"-->
+            <!--android:targetPackage="com.ihunter.taskee"-->
+            <!--android:targetClass="com.ihunter.taskee.activities.TaskEditorActivity" />-->
+        <!--<categories android:name="android.shortcut.conversation" />-->
+    <!--</shortcut>-->
 </shortcuts>

@@ -3,5 +3,4 @@
     android:id="@+id/alarm_checkbox"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:button="@drawable/alarm_drawable"
     android:padding="8dp"/>

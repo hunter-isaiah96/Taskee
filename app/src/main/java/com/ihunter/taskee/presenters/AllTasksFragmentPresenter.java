@@ -1,6 +1,6 @@
 package com.ihunter.taskee.presenters;
 
-import com.ihunter.taskee.interfaces.AllTasksFragmentView;
+import com.ihunter.taskee.interfaces.views.AllTasksFragmentView;
 import com.ihunter.taskee.services.RealmService;
 
 /**
@@ -9,12 +9,12 @@ import com.ihunter.taskee.services.RealmService;
 
 public class AllTasksFragmentPresenter {
 
-    AllTasksFragmentView allTasksFragmentView;
-    RealmService realmService;
+    private AllTasksFragmentView allTasksFragmentView;
+    private RealmService realmService;
 
-    public AllTasksFragmentPresenter(AllTasksFragmentView allTasksFragmentView){
+    public AllTasksFragmentPresenter(AllTasksFragmentView allTasksFragmentView, RealmService realmService){
         this.allTasksFragmentView = allTasksFragmentView;
-        realmService = new RealmService();
+        this.realmService = realmService;
     }
 
     public void refreshAllTasks(){

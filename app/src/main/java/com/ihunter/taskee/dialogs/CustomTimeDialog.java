@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-import com.ihunter.taskee.interfaces.TaskEditorView;
+import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 

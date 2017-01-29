@@ -1,5 +1,8 @@
 package com.ihunter.taskee.services;
 
+import android.app.Activity;
+
+import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.data.Task;
 
 import java.util.Calendar;
@@ -9,24 +12,19 @@ import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
-/**
- * Created by Master Bison on 1/5/2017.
- */
-
 public class RealmService {
 
-    Realm realm;
+    private Realm realm;
 
-    public RealmService(){
-        realm = Realm.getInstance(getRealmConfiugration());
+    public RealmService(Activity activity){
+        realm = TaskeeApplication.get(activity).getRealm();
     }
 
-    public Task getTaskByID(long id){
+    private Task getTaskByID(long id){
         return realm.where(Task.class).equalTo("id", id).findFirst();
     }
 
     public RealmResults<Task> getAllTasks(){
-//        return realm.where(Task.class).findAllSorted("timestamp", Sort.ASCENDING);
         return realm.where(Task.class).findAllSorted("id", Sort.DESCENDING);
     }
 

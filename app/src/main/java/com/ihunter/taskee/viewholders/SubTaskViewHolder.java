@@ -1,13 +1,15 @@
 package com.ihunter.taskee.viewholders;
 
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.data.SubTask;
-import com.ihunter.taskee.interfaces.SubTaskItemAdapterInteractor;
+import com.ihunter.taskee.interfaces.interactors.SubTaskItemAdapterInteractor;
 import com.ihunter.taskee.ui.CustomTextView;
+import com.mikepenz.iconics.view.IconicsImageView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -18,7 +20,7 @@ public class SubTaskViewHolder extends RecyclerView.ViewHolder{
     CustomTextView subTaskTitle;
 
     @BindView(R.id.remove_sub_task)
-    AppCompatImageView removeSubTask;
+    IconicsImageView removeSubTask;
 
     @BindView(R.id.sub_task_completion)
     AppCompatCheckBox planCompletion;

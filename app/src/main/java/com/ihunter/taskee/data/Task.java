@@ -12,14 +12,14 @@ public class Task extends RealmObject{
     @PrimaryKey
     private int id;
 
-    private String color = "";
     private String title = "";
     private String note = "";
     private String image = "";
-    private RealmList<SubTask> subTasks;
+    private String color = "";
     private long timestamp = Calendar.getInstance().getTimeInMillis();
     private boolean isCompleted =  false;
     private boolean hasReminder = false;
+    private RealmList<SubTask> subTasks;
 
     @Ignore
     private boolean dateSet = false;

@@ -1,4 +1,4 @@
-package com.ihunter.taskee.interfaces;
+package com.ihunter.taskee.interfaces.interactors;
 
 /**
  * Created by Master Bison on 1/3/2017.

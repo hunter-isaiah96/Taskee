@@ -50,20 +50,12 @@
                     android:layout_height="20dp"
                     android:layout_margin="10dp">
 
-                    <android.support.v7.widget.AppCompatImageView
-
+                    <com.mikepenz.iconics.view.IconicsImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="start"
-                        android:src="@drawable/zzz_close_circle"
-                        android:tint="@android:color/white" />
-
-                    <android.support.v7.widget.AppCompatImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start"
-                        android:src="@drawable/zzz_close_circle_outline"
-                        android:tint="?colorPrimary" />
+                        app:iiv_icon="@string/faw_times_circle_o"
+                        app:iiv_color="@color/white" />
 
                 </FrameLayout>
 
@@ -157,7 +149,9 @@
             android:padding="10dp"
             android:textSize="12sp"
             app:fontName="@string/lato_regular"
-            app:layout_widthPercent="50%" />
+            app:layout_widthPercent="50%"
+            android:textColorHint="@color/textColorSecondary"
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:layout_height="match_parent"

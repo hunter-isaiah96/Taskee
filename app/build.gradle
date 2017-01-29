@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -29,8 +30,8 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:percent:25.1.0'
     compile "com.mikepenz:iconics-core:2.8.2@aar"
+    compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.7.0.0@aar'
-    compile 'com.pavelsikun:materialdesignicons:1.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     testCompile 'junit:junit:4.12'
@@ -41,4 +42,8 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:3.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.thebluealliance:spectrum:0.7.1'
+    compile 'com.multidots:fingerprint-auth:1.0.1'
+    compile ('com.github.ozodrukh:CircularReveal:2.0.1@aar') {
+        transitive = true;
+    }
 }

@@ -7,8 +7,9 @@ import io.realm.RealmObject;
  */
 
 public class SubTask extends RealmObject {
-    String task;
-    boolean isCompleted = false;
+
+    private String task;
+    private boolean isCompleted = false;
 
     public void setCompleted(boolean completed) {
         isCompleted = completed;

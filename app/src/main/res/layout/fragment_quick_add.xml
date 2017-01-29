@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent_black">
+
+    <FrameLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/quick_add_padding">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/round_corder"
+            android:clickable="true"
+            android:orientation="vertical">
+
+            <com.ihunter.taskee.ui.CustomEditText
+                android:id="@+id/edit_task_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:ems="10"
+                android:hint="@string/word_title"
+                android:inputType="textCapSentences"
+                android:padding="20dp"
+                android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorSecondary"
+                android:textSize="35sp"
+                app:fontName="@string/lato_light" />
+
+            <com.ihunter.taskee.ui.CustomTextView
+                android:id="@+id/edit_task_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/edit_task_title"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:text="@string/placeholder_date"
+                android:textColor="@color/textColorPrimary" />
+
+            <com.ihunter.taskee.ui.CustomEditText
+                android:id="@+id/edit_task_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/edit_task_date"
+                android:background="@null"
+                android:gravity="top|start"
+                android:hint="@string/line_add_note"
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="20dp"
+                android:textColor="@color/textColorPrimary"
+                android:textColorHint="@color/textColorSecondary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/edit_task_pick_color"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/quick_action_background"
+                    app:iiv_color="@color/quick_action_color"
+                    app:iiv_icon="@string/faw_paint_brush"
+                    app:iiv_size="@dimen/quick_actions_size"
+                    android:clickable="true"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/edit_task_set_alarm"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/quick_action_background"
+                    app:iiv_color="@color/quick_action_color"
+                    app:iiv_icon="@string/faw_clock_o"
+                    app:iiv_size="@dimen/quick_actions_size"
+                    android:clickable="true"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/edit_task_select_image"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/quick_action_background"
+                    app:iiv_color="@color/quick_action_color"
+                    app:iiv_icon="@string/faw_picture_o"
+                    app:iiv_size="@dimen/quick_actions_size"
+                    android:clickable="true"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:id="@+id/edit_task_save_task"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/quick_action_background"
+                    app:iiv_color="@color/quick_action_color"
+                    app:iiv_icon="@string/faw_arrow_right"
+                    app:iiv_size="@dimen/quick_actions_size"
+                    android:clickable="true"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view_bubble"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+</io.codetail.widget.RevealFrameLayout>
