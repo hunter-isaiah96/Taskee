@@ -16,7 +16,7 @@ public class Constants {
 
     private static final SimpleDateFormat fullDateTime = new SimpleDateFormat("MMM d, yyyy - h:mma", Locale.getDefault());
     private static final SimpleDateFormat shortDate = new SimpleDateFormat("EEE, MMM d - yyyy", Locale.getDefault());
-    private static final SimpleDateFormat monthYear = new SimpleDateFormat("MMM - YYYY", Locale.getDefault());
+    private static final SimpleDateFormat monthYear = new SimpleDateFormat("MMM - yyyy", Locale.ENGLISH);
 
     public static final int PICK_FILE_RESULT_CODE = 1;
     public static final int EXTERNAL_STORAGE_RESULT_CODE = 2;

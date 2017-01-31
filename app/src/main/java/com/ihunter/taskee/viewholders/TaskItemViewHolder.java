@@ -11,7 +11,6 @@ import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.TaskEditorActivity;
 import com.ihunter.taskee.data.Task;
-import com.ihunter.taskee.ui.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +32,7 @@ public class TaskItemViewHolder extends RecyclerView.ViewHolder {
     TextView taskDate;
 
     @BindView(R.id.has_subtasks)
-    CustomTextView hasSubTasks;
+    TextView hasSubTasks;
 
     public TaskItemViewHolder(View v) {
         super(v);

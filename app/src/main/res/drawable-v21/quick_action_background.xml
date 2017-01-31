@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ripple android:color="@color/colorPrimary" xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/white"/>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/quick_action_ripple">
+
+    <item>
+        <shape android:shape="oval" android:drawable="@color/colorAccent">
+
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp"/>
+            <solid android:color="@color/white"/>
+
+        </shape>
+    </item>
+
 </ripple>

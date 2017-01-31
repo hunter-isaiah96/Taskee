@@ -61,7 +61,7 @@
 
             </FrameLayout>
 
-            <com.ihunter.taskee.ui.CustomEditText
+            <EditText
                 android:id="@+id/edit_task_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -77,10 +77,9 @@
                 android:padding="0dp"
                 android:textColor="@color/textColorPrimary"
                 android:textColorHint="@color/textColorHint"
-                android:textSize="16sp"
-                app:fontName="@string/lato_regular" />
+                android:textSize="16sp"/>
 
-            <com.ihunter.taskee.ui.CustomTextView
+            <TextView
                 android:id="@+id/edit_task_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,10 +91,9 @@
                 android:gravity="center_vertical"
                 android:text="@string/line_select_date"
                 android:textColor="@color/textColorPrimary"
-                android:textSize="12sp"
-                app:fontName="@string/lato_regular" />
+                android:textSize="12sp" />
 
-            <com.ihunter.taskee.ui.CustomEditText
+            <EditText
                 android:id="@+id/edit_task_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -111,8 +109,7 @@
                 android:padding="0dp"
                 android:textColor="@color/textColorPrimary"
                 android:textColorHint="@color/textColorHint"
-                android:textSize="12sp"
-                app:fontName="@string/lato_regular" />
+                android:textSize="12sp" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/edit_task_sub_task_list"
@@ -135,7 +132,7 @@
         android:background="@android:color/white"
         android:orientation="horizontal">
 
-        <com.ihunter.taskee.ui.CustomEditText
+        <EditText
             android:id="@+id/edit_task_add_sub_task"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -8,14 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="colorControlHighlight">#40ffffff</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     </style>
 
-    <style name="CreateTaskUrgencyRadioButtons">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textColor">@color/textColorSecondary</item>
-        <item name="fontName">@string/lato_regular</item>
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/holo_blue_bright</item>
     </style>
 
     <style name="Toolbar">
@@ -61,6 +59,18 @@
         <item name="android:padding">15dp</item>
         <item name="android:background">@drawable/dialog_buttons</item>
         <item name="fontName">@string/lato_bold</item>
+    </style>
+
+    <style name="QuickActionsStyle">
+        <item name="android:layout_width">@dimen/quick_actions_container_size</item>
+        <item name="android:layout_height">@dimen/quick_actions_container_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">@dimen/quick_actions_margin</item>
+        <item name="android:background">@drawable/quick_action_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/quick_actions_padding</item>
+        <item name="iiv_size">@dimen/quick_actions_size</item>
+        <item name="iiv_color">@color/quick_action_color</item>
     </style>
 
 </resources>

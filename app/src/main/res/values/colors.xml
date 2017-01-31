@@ -13,13 +13,14 @@
     <color name="colorBackground">@color/colorPrimary</color>
 
     <color name="quick_action_color">#cccccc</color>
+    <color name="quick_action_ripple">#e6e6e6</color>
 
     <!-- Drawer Colors -->
-    <color name="material_drawer_background">@color/white</color>
-    <color name="material_drawer_primary_text">@color/colorPrimaryDark</color>
-    <color name="material_drawer_primary_icon">@color/colorPrimaryDark</color>
-    <color name="material_drawer_selected">@color/colorPrimary</color>
-    <color name="material_drawer_selected_text">#000</color>
+    <!--<color name="material_drawer_background">@color/white</color>-->
+    <!--<color name="material_drawer_primary_text">@color/colorPrimaryDark</color>-->
+    <!--<color name="material_drawer_primary_icon">@color/colorPrimaryDark</color>-->
+    <!--<color name="material_drawer_selected">@color/colorPrimary</color>-->
+    <!--<color name="material_drawer_selected_text">#000</color>-->
 
     <color name="placeholder_color">@color/md_red_500</color>
 

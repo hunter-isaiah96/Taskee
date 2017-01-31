@@ -17,7 +17,7 @@
         app:buttonTint="@color/textColorPrimary"
         android:layout_gravity="center_vertical"/>
 
-    <com.ihunter.taskee.ui.CustomTextView
+    <TextView
         android:id="@+id/sub_task_title"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -25,9 +25,7 @@
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:layout_gravity="center_vertical"
-        android:text="hello"
-        android:textColor="@color/textColorPrimary"
-        app:fontName="@string/lato_regular" />
+        android:textColor="@color/textColorPrimary" />
 
     <com.mikepenz.iconics.view.IconicsImageView
         android:id="@+id/remove_sub_task"

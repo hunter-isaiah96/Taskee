@@ -9,6 +9,7 @@ import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 public class TaskeeApplication extends Application{
 
@@ -18,6 +19,10 @@ public class TaskeeApplication extends Application{
     public void onCreate() {
         super.onCreate();
         Realm.init(this);
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath(getString(R.string.lato_regular))
+                        .setFontAttrId(R.attr.fontPath)
+                        .build());
         Iconics.registerFont(new FontAwesome());
         Iconics.registerFont(new MaterialDesignIconic());
         realm = Realm.getInstance(getRealmConfiugration());

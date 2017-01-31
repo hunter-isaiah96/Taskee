@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -37,7 +38,6 @@ import com.ihunter.taskee.dialogs.CustomTimeDialog;
 import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.ihunter.taskee.presenters.TaskEditorPresenter;
 import com.ihunter.taskee.services.AlarmService;
-import com.ihunter.taskee.ui.CustomEditText;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
@@ -82,10 +82,10 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorV
     AppCompatImageView editTaskImage;
 
     @BindView(R.id.edit_task_title)
-    CustomEditText editTaskTitle;
+    EditText editTaskTitle;
 
     @BindView(R.id.edit_task_note)
-    CustomEditText editTaskNote;
+    EditText editTaskNote;
 
     @BindView(R.id.edit_task_sub_task_list)
     RecyclerView subTaskRecyclerView;
@@ -100,7 +100,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorV
     IconicsImageView editTaskPickImage;
 
     @BindView(R.id.edit_task_add_sub_task)
-    CustomEditText editTaskAddSubTask;
+    EditText editTaskAddSubTask;
 
     @BindView(R.id.edit_task_pick_color)
     IconicsImageView pickColor;

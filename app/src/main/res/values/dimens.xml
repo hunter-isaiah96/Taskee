@@ -19,11 +19,12 @@
 
     <dimen name="item_margin">5dp</dimen>
 
-    <!--<dimen name="ten_dp">10dp</dimen>-->
-    <!--<dimen name="twenty_dp">20dp</dimen>-->
-    <dimen name="quick_add_padding">8dp</dimen>
-    <dimen name="quick_actions_size">25dp</dimen>
-    <dimen name="quick_actions_margin">20dp</dimen>
+    <dimen name="quick_add_container_padding">8dp</dimen>
+
+    <dimen name="quick_actions_container_size">45dp</dimen>
+    <dimen name="quick_actions_size">20dp</dimen>
+    <dimen name="quick_actions_padding">0dp</dimen>
+    <dimen name="quick_actions_margin">10dp</dimen>
 
 
 </resources>

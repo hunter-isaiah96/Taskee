@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.ui.CustomTextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +26,13 @@ public class ConfirmDialog extends Dialog {
     LinearLayout topDialog;
 
     @BindView(R.id.negative_dialog)
-    CustomTextView negativeDialog;
+    TextView negativeDialog;
 
     @BindView(R.id.positive_dialog)
-    CustomTextView positiveDialog;
+    TextView positiveDialog;
 
     @BindView(R.id.dialog_title)
-    CustomTextView dialogTitle;
+    TextView dialogTitle;
 
     @BindView(R.id.dialog_icon)
     AppCompatImageView dialogIcon;

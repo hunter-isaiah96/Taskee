@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/placeholder_color"
-    android:paddingBottom="20dp"
     android:clickable="true"
-    android:foreground="?selectableItemBackground">
+    android:foreground="?selectableItemBackground"
+    android:paddingBottom="20dp">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/task_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop" />
 
-    <com.ihunter.taskee.ui.CustomTextView
+    <TextView
         android:id="@+id/task_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,10 +25,9 @@
         android:paddingEnd="10dp"
         android:text="@string/placeholder_title"
         android:textColor="@color/textColorPrimary"
-        android:textSize="16sp"
-        app:fontName="@string/lato_regular" />
+        android:textSize="16sp" />
 
-    <com.ihunter.taskee.ui.CustomTextView
+    <TextView
         android:id="@+id/task_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,10 +39,9 @@
         android:gravity="center_vertical"
         android:text="@string/placeholder_date"
         android:textColor="@color/textColorPrimary"
-        android:textSize="12sp"
-        app:fontName="@string/lato_regular"/>
+        android:textSize="12sp" />
 
-    <com.ihunter.taskee.ui.CustomTextView
+    <TextView
         android:id="@+id/task_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,12 +50,11 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="@string/placeholder_lorem"
         android:textColor="@color/textColorPrimary"
-        android:textSize="12sp"
-        app:fontName="@string/lato_regular"
-        android:maxLines="2"
-        android:ellipsize="end"/>
+        android:textSize="12sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/task_sub_tasks"

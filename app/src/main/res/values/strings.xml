@@ -13,16 +13,16 @@
     <string name="edit_task_future_error">Please selected a date in the future</string>
     <string name="edit_task_save_error">There was a problem saving this task</string>
 
-    <string name="lato_black">Lato-Black.ttf</string>
-    <string name="lato_black_italic">Lato-BlackItalic.ttf</string>
-    <string name="lato_bold">Lato-Bold.ttf</string>
-    <string name="lato_bold_italic">Lato-BoldItalic.ttf</string>
-    <string name="lato_hairline">Lato-Hairline.ttf</string>
-    <string name="lato_hairline_italic">Lato-HairlineItalic.ttf</string>
-    <string name="lato_italic">Lato-Italic.ttf</string>
-    <string name="lato_light">Lato-Light.ttf</string>
-    <string name="lato_light_italic">Lato-LightItalic.ttf</string>
-    <string name="lato_regular">Lato-Regular.ttf</string>
+    <string name="lato_black">fonts/Lato-Black.ttf</string>
+    <string name="lato_black_italic">fonts/Lato-BlackItalic.ttf</string>
+    <string name="lato_bold">fonts/Lato-Bold.ttf</string>
+    <string name="lato_bold_italic">fonts/Lato-BoldItalic.ttf</string>
+    <string name="lato_hairline">fonts/Lato-Hairline.ttf</string>
+    <string name="lato_hairline_italic">fonts/Lato-HairlineItalic.ttf</string>
+    <string name="lato_italic">fonts/Lato-Italic.ttf</string>
+    <string name="lato_light">fonts/Lato-Light.ttf</string>
+    <string name="lato_light_italic">fonts/Lato-LightItalic.ttf</string>
+    <string name="lato_regular">fonts/Lato-Regular.ttf</string>
 
     <string name="dialog_remove_item">Are you sure you want to remove this item</string>
     <string name="dialog_positive">YES</string>
@@ -46,6 +46,7 @@
     <string name="word_yes">Yes</string>
     <string name="word_no">No</string>
     <string name="word_save">Save</string>
+    <string name="word_on">On</string>
 
     <string name="placeholder_date">Jan 1, 2017 &#8211; 12:00AM</string>
     <string name="placeholder_title">This is a title for a task</string>

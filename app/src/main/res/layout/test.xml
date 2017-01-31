@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<io.codetail.widget.RevealFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorBackground"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:clickable="true">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/untitled"
-        android:scaleType="centerCrop"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#6c000000">
-
-        <TextView
+        <FrameLayout
+            android:id="@+id/main_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mobile Phone"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="50sp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="20dp"/>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:visibility="gone">
 
-    </FrameLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mobile Phone"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:layout_gravity="center"
+                    android:textSize="50sp"
+                    android:layout_marginBottom="20dp"/>
 
-</FrameLayout>
+        </FrameLayout>
+
+        <com.mikepenz.iconics.view.IconicsImageView
+            android:id="@+id/plan"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:background="@drawable/fab"
+            android:padding="@dimen/fab_padding"
+            app:iiv_icon="@string/faw_pencil"
+            app:iiv_color="@color/white" />
+
+</io.codetail.widget.RevealFrameLayout>
