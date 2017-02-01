@@ -7,9 +7,9 @@
     <color name="colorPrimaryLight">#e4e4e4</color>
     <color name="colorAccent">#19C4D8</color>
 
-    <color name="textColorPrimary">#282828</color>
-    <color name="textColorSecondary">#c7c7c7</color>
-    <color name="textColorHint">#cccccc</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorSecondary">#e7e7e7</color>
+    <color name="textColorHint">#e1e1e1</color>
     <color name="colorBackground">@color/colorPrimary</color>
 
     <color name="quick_action_color">#cccccc</color>
@@ -37,12 +37,10 @@
         <item>@color/md_green_500</item>
         <item>@color/md_light_green_500</item>
         <item>@color/md_lime_500</item>
-        <item>@color/md_yellow_500</item>
         <item>@color/md_amber_500</item>
         <item>@color/md_orange_500</item>
         <item>@color/md_deep_orange_500</item>
         <item>@color/md_brown_500</item>
-        <item>@color/md_grey_500</item>
         <item>@color/md_blue_grey_500</item>
     </array>
 

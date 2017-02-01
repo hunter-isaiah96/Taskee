@@ -37,8 +37,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"
-            android:visibility="gone"
-            app:fontName="@string/lato_regular"/>
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -53,8 +52,7 @@
                 android:textStyle="bold"
                 android:textSize="14sp"
                 android:padding="15dp"
-                android:visibility="gone"
-                app:fontName="@string/lato_regular" />
+                android:visibility="gone" />
 
             <com.ihunter.taskee.ui.CustomTextView
                 android:id="@+id/positive_dialog"

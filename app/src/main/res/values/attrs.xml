@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--<attr name="fontName" format="string" />-->
+    <!--<attr name="" format="string" />-->
 
     <!--<declare-styleable name="CustomTextView">-->
-        <!--<attr name="fontName"/>-->
+        <!--<attr name=""/>-->
     <!--</declare-styleable>-->
 
     <!--<declare-styleable name="CustomEditText">-->
-        <!--<attr name="fontName"/>-->
+        <!--<attr name=""/>-->
     <!--</declare-styleable>-->
 
 </resources>

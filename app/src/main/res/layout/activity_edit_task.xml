@@ -145,7 +145,6 @@
             android:maxLines="1"
             android:padding="10dp"
             android:textSize="12sp"
-            app:fontName="@string/lato_regular"
             app:layout_widthPercent="50%"
             android:textColorHint="@color/textColorSecondary"
             android:textColor="@android:color/black" />
