@@ -20,6 +20,7 @@
     <dimen name="item_margin">5dp</dimen>
 
     <dimen name="quick_add_container_padding">8dp</dimen>
+    <dimen name="quick_add_view_margin">15dp</dimen>
 
     <dimen name="quick_actions_container_size">45dp</dimen>
     <dimen name="quick_actions_size">20dp</dimen>

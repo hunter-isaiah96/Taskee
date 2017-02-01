@@ -5,5 +5,5 @@ import com.ihunter.taskee.data.Task;
 import io.realm.RealmResults;
 
 public interface AllTasksFragmentView {
-    void onRefreshAllTasks(RealmResults<Task> tasks);
+    void onTasksLoaded(RealmResults<Task> tasks);
 }

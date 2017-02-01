@@ -10,9 +10,6 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created by Master Bison on 1/29/2017.
- */
 public class MainActivityTest {
 
     @Before

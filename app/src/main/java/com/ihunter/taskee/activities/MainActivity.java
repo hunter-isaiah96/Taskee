@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.content_container)
     FrameLayout view;
+
     @BindView(R.id.root_view)
     FrameLayout view2;
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView newPlan;
 
     Fragment currentFragment;
-    Animations animations;
+    private Animations animations;
     private Drawer mDrawer;
     private QuickAddFragment quickAddFragment;
     private boolean closingQuickAdd = false;

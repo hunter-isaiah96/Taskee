@@ -3,12 +3,14 @@ package com.ihunter.taskee.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
@@ -35,14 +38,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 
+import static android.view.View.GONE;
 import static com.ihunter.taskee.Constants.REVEAL_DURATION;
+import static com.ihunter.taskee.R.id.edit_task_alarm;
 import static com.ihunter.taskee.R.id.edit_task_date;
+import static com.ihunter.taskee.R.id.edit_task_date_wrapper;
 import static com.ihunter.taskee.R.id.edit_task_note;
+import static com.ihunter.taskee.R.id.edit_task_remove_alarm;
 import static com.ihunter.taskee.R.id.edit_task_save_task;
-import static com.ihunter.taskee.R.id.edit_task_set_alarm;
 import static com.ihunter.taskee.R.id.edit_task_title;
 import static com.ihunter.taskee.R.id.main_view;
-import static com.ihunter.taskee.R.id.root_view;
+import static com.ihunter.taskee.R.id.reveal_layout;
 import static com.ihunter.taskee.R.id.view_bubble;
 
 public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener, TaskEditorView {
@@ -52,17 +58,32 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     private Task task;
     private boolean shouldAnimate = true;
 
+    @BindView(reveal_layout)
+    View container;
+
     @BindView(main_view)
     View mainView;
-
-    @BindView(root_view)
-    View container;
 
     @BindView(view_bubble)
     View bubble;
 
+    @BindView(edit_task_date_wrapper)
+    View editTaskDateWrapper;
+
+    @BindView(edit_task_save_task)
+    View editTaskSave;
+
     @BindView(edit_task_title)
     EditText editTaskTitle;
+
+    @BindView(edit_task_note)
+    EditText editTaskNote;
+
+    @BindView(edit_task_alarm)
+    IconicsImageView editTaskAlarm;
+
+    @BindView(edit_task_date)
+    TextView editTaskDate;
 
     @OnTextChanged(edit_task_title)
     void onEditTaskTitleTextChange(SpannableStringBuilder builder) {
@@ -74,29 +95,32 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
         }
     }
 
-    @BindView(edit_task_save_task)
-    View editTaskSave;
-
-    @BindView(edit_task_date)
-    AppCompatTextView editTaskDate;
-
-    @BindView(edit_task_note)
-    EditText editTaskNote;
-
     @OnTextChanged(edit_task_note)
     void onEditTaskNoteTextChange(SpannableStringBuilder builder) {
         task.setNote(builder.toString());
     }
 
-    @BindView(edit_task_set_alarm)
-    IconicsImageView setAlarm;
 
-    @OnClick(edit_task_set_alarm)
-    void onSetAlarmClick() {
+    @OnClick(edit_task_date)
+    void pickDateTime(){
         CustomTimeDialog timeDialog = new CustomTimeDialog(getActivity(), task.getTimestamp());
         timeDialog.setTaskEditorPresenter(this);
         timeDialog.show();
     }
+
+    @OnClick(edit_task_remove_alarm)
+    void removeAlarm(){
+        editTaskDateWrapper.setVisibility(GONE);
+        editTaskAlarm.setColor(ContextCompat.getColor(getContext().getApplicationContext(), R.color.quick_action_color));
+    }
+
+
+//    @OnClick(edit_task_set_alarm)
+//    void onSetAlarmClick() {
+//        CustomTimeDialog timeDialog = new CustomTimeDialog(getActivity(), task.getTimestamp());
+//        timeDialog.setTaskEditorPresenter(this);
+//        timeDialog.show();
+//    }
 
     @OnClick(edit_task_save_task)
     void onSaveClick() {
@@ -155,7 +179,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
                                 public void onAnimationEnd(Animator animation) {
                                     super.onAnimationEnd(animation);
                                     bubble.animate().setListener(null);
-                                    bubble.setVisibility(View.GONE);
+                                    bubble.setVisibility(GONE);
                                     editTaskTitle.requestFocus();
                                     InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                                     mgr.showSoftInput(editTaskTitle, InputMethodManager.SHOW_IMPLICIT);
@@ -171,7 +195,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
                     animation.removeListener(this);
-                    view.setVisibility(View.GONE);
+                    view.setVisibility(GONE);
                     internalClose();
                 }
             });
@@ -219,11 +243,25 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
         int[] androidColors = getResources().getIntArray(R.array.task_colors);
         int selectedColor = androidColors[new Random().nextInt(androidColors.length)];
         task.setColor(Integer.toHexString(selectedColor));
+        Drawable background = mainView.getBackground();
+        if(background instanceof GradientDrawable){
+            GradientDrawable shapeDrawable = (GradientDrawable) background;
+            shapeDrawable.setColor(selectedColor);
+        }
+        Drawable background2 = editTaskSave.getBackground();
+        if(background instanceof GradientDrawable){
 
+        }
         editTaskDate.setText(Constants.getFullDateTime(task.getTimestamp()));
-        setAlarm.setColor(ContextCompat.getColor(getContext().getApplicationContext(), R.color.colorAccent));
+        editTaskAlarm.setColor(ContextCompat.getColor(getContext().getApplicationContext(), R.color.colorAccent));
         editTaskSave.setAlpha(0.5f);
     }
+
+    public static int getContrastColor(int color) {
+        double y = (299 * Color.red(color) + 587 * Color.green(color) + 114 * Color.blue(color)) / 1000;
+        return y >= 128 ? Color.BLACK : Color.WHITE;
+    }
+
 
     @Override
     public void onTaskValidationError(Constants.ValidationError validationError) {
@@ -242,7 +280,8 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     @Override
     public void onTaskDateSet(long time) {
-
+        task.setTimestamp(time);
+        editTaskDate.setText(Constants.getFullDateTime(time));
     }
 
     @Override

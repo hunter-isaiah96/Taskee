@@ -15,9 +15,9 @@ import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.MainActivity;
 import com.ihunter.taskee.adapters.TaskItemAdapter;
 import com.ihunter.taskee.data.Task;
+import com.ihunter.taskee.interfaces.repositories.TasksRepositoryImpl;
 import com.ihunter.taskee.interfaces.views.AllTasksFragmentView;
 import com.ihunter.taskee.presenters.AllTasksFragmentPresenter;
-import com.ihunter.taskee.services.RealmService;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
 import com.ihunter.taskee.ui.SimpleDividerItemDecoration;
 
@@ -57,7 +57,7 @@ public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
         ButterKnife.bind(this, view);
         setupToolbar();
         setupTasksList();
-        presenter = new AllTasksFragmentPresenter(this, new RealmService(getActivity()));
+        presenter = new AllTasksFragmentPresenter(this, new TasksRepositoryImpl(getContext()));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
     }
 
     @Override
-    public void onRefreshAllTasks(RealmResults<Task> tasks) {
+    public void onTasksLoaded(RealmResults<Task> tasks) {
         adapter.replacePlansList(tasks);
     }
 }
