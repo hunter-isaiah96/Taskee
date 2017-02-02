@@ -1,7 +1,5 @@
 package com.ihunter.taskee;
 
-import android.content.res.ColorStateList;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -37,32 +35,7 @@ public class Constants {
     }
 
     public static boolean isSameMonthOfYear(Calendar calendar, Calendar calendar2){
-        if(calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)){
-            return true;
-        }
-        return false;
+        return calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) && calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR);
     }
-
-    public static ColorStateList getPressedColorSelector(int normalColor, int pressedColor)
-    {
-        return new ColorStateList(
-                new int[][]
-                        {
-                                new int[]{android.R.attr.state_pressed},
-                                new int[]{android.R.attr.state_focused},
-                                new int[]{android.R.attr.state_activated},
-                                new int[]{}
-                        },
-                new int[]
-                        {
-                                pressedColor,
-                                pressedColor,
-                                pressedColor,
-                                normalColor
-                        }
-        );
-    }
-
-
 
 }

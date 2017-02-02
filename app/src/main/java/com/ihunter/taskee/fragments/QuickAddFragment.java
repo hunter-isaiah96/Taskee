@@ -31,6 +31,7 @@ import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.dialogs.CustomTimeDialog;
 import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.ihunter.taskee.presenters.QuickAddPresenter;
+import com.ihunter.taskee.utils.ColorUtils;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.thebluealliance.spectrum.SpectrumDialog;
 
@@ -48,6 +49,7 @@ import static android.view.View.VISIBLE;
 import static com.ihunter.taskee.Constants.REVEAL_DURATION;
 import static com.ihunter.taskee.R.id.edit_task_alarm;
 import static com.ihunter.taskee.R.id.edit_task_date;
+import static com.ihunter.taskee.R.id.edit_task_date_on;
 import static com.ihunter.taskee.R.id.edit_task_date_wrapper;
 import static com.ihunter.taskee.R.id.edit_task_note;
 import static com.ihunter.taskee.R.id.edit_task_pick_color;
@@ -81,9 +83,6 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     @BindView(edit_task_date_wrapper)
     View editTaskDateWrapper;
 
-    @BindView(edit_task_save_task)
-    View editTaskSave;
-
     /* EDITTEXT */
 
     @BindView(edit_task_title)
@@ -100,7 +99,16 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     @BindView(edit_task_pick_color)
     IconicsImageView editTaskPickColor;
 
+    @BindView(edit_task_save_task)
+    IconicsImageView editTaskSave;
+
+    @BindView(edit_task_remove_alarm)
+    IconicsImageView editTaskRemoveAlarm;
+
     /* TEXTVIEWS */
+
+    @BindView(edit_task_date_on)
+    TextView editTaskDateOn;
 
     @BindView(edit_task_date)
     TextView editTaskDate;
@@ -127,7 +135,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     @OnClick(edit_task_date)
     void pickDateTime(){
-        CustomTimeDialog timeDialog = new CustomTimeDialog(getActivity(), task.getTimestamp());
+        CustomTimeDialog timeDialog = new CustomTimeDialog(getActivity(), task.getTimestamp(), task.getColor());
         timeDialog.setTaskEditorPresenter(this);
         timeDialog.show();
     }
@@ -143,7 +151,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     void addAlarm(){
         if(!task.hasReminder()) {
             editTaskDateWrapper.setVisibility(VISIBLE);
-            editTaskAlarm.setColor(getComplimentaryColor(Color.parseColor("#" + task.getColor())));
+            editTaskAlarm.setColor(ColorUtils.getComplimentaryColor(Color.parseColor("#" + task.getColor())));
             task.setHasReminder(true);
         }
     }
@@ -160,7 +168,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
                     public void onColorSelected(boolean positiveResult, @ColorInt int color) {
                         if(positiveResult) {
                             task.setColor(Integer.toHexString(color));
-                            editTaskAlarm.setColor(getComplimentaryColor(color));
+                            editTaskAlarm.setColor(ColorUtils.getComplimentaryColor(color));
                             setColors(color);
                         }
                     }
@@ -202,18 +210,17 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
             bubble.setBackgroundColor(selectedColor);
             onNewTask();
         }
-
     }
 
     @Override
     public void onGlobalLayout() {
         container.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         if (shouldAnimate) {
-            circularReveal(true);
+            circularReveal(true, 0);
         }
     }
 
-    void circularReveal(boolean animateIn) {
+    void circularReveal(boolean animateIn, int revealDelay) {
         final View view = mainView;
         bubble.setVisibility(VISIBLE);
         float[] centerPosition = animations.getCenterOfView(view);
@@ -244,6 +251,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
             animator.start();
         } else {
             final Animator animator2 = animations.circularReveal(view, centerPosition[0], centerPosition[1], finalRadius, false);
+            animator2.setStartDelay(revealDelay);
             animator2.addListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
@@ -276,11 +284,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     public void closeFragment() {
         shouldAnimate = false;
-        circularReveal(false);
-    }
-
-    private boolean isKitKatOrLower() {
-        return Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT;
+        circularReveal(false, 0);
     }
 
     public void onNewTask() {
@@ -295,7 +299,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
         task.setHasReminder(true);
 
         editTaskDate.setText(Constants.getFullDateTime(task.getTimestamp()));
-        editTaskAlarm.setColor(getComplimentaryColor(selectedColor));
+        editTaskAlarm.setColor(ColorUtils.getComplimentaryColor(selectedColor));
         editTaskSave.setAlpha(0.5f);
         editTaskSave.setEnabled(false);
         task.setColor(Integer.toHexString(selectedColor));
@@ -303,28 +307,40 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     }
 
     private void setColors(int color) {
+        int contrastColor = ColorUtils.isColorDark(color) ? Color.WHITE : Color.BLACK;
+        int complimentaryColor = ColorUtils.getComplimentaryColor(color);
+        int alphaContrast = Color.parseColor("#73" + Integer.toHexString(contrastColor).substring(2));
+
+        editTaskTitle.setHintTextColor(alphaContrast);
+        editTaskNote.setTextColor(contrastColor);
+        editTaskNote.setHintTextColor(alphaContrast);
+        editTaskDateOn.setTextColor(alphaContrast);
+        editTaskDate.setTextColor(contrastColor);
+        editTaskRemoveAlarm.setColor(contrastColor);
         editTaskPickColor.setColor(color);
         bubble.setBackgroundColor(color);
-        setCursorColor(editTaskTitle, getComplimentaryColor(color));
+        setCursorColor(editTaskTitle, contrastColor);
+
         Drawable background = mainView.getBackground();
         if(background instanceof GradientDrawable){
             GradientDrawable shapeDrawable = (GradientDrawable) background;
             shapeDrawable.setColor(color);
         }
         Drawable background2 = editTaskSave.getBackground();
-        if(background2 instanceof RippleDrawable && Build.VERSION.SDK_INT >= 21){
-            RippleDrawable shapeDrawable2 = (RippleDrawable) background2;
-            ((GradientDrawable)shapeDrawable2.getDrawable(0)).setColor(getComplimentaryColor(color));
+        if(Build.VERSION.SDK_INT >= 21){
+            if(background2 instanceof RippleDrawable){
+                RippleDrawable shapeDrawable2 = (RippleDrawable) background2;
+                ((GradientDrawable)shapeDrawable2.getDrawable(0)).setColor(complimentaryColor);
+            }
+        }else{
+            if(background2 instanceof GradientDrawable){
+                GradientDrawable shapeDrawable = (GradientDrawable) background2;
+                shapeDrawable.setColor(color);
+            }
         }
+        editTaskSave.setColor(ColorUtils.isColorDark(complimentaryColor) ? Color.WHITE : Color.BLACK);
     }
 
-    public static int getComplimentaryColor(int colorToInvert) {
-        float[] hsv = new float[3];
-        Color.RGBToHSV(Color.red(colorToInvert), Color.green(colorToInvert),
-                Color.blue(colorToInvert), hsv);
-        hsv[0] = (hsv[0] + 180) % 360;
-        return Color.HSVToColor(hsv);
-    }
 
     public static void setCursorColor(EditText view, @ColorInt int color) {
         try {
@@ -359,7 +375,8 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     @Override
     public void onTaskSaveSuccessful(int id) {
-
+        bubble.findViewById(R.id.task_saved).setVisibility(VISIBLE);
+        circularReveal(false, REVEAL_DURATION * 3);
     }
 
     @Override

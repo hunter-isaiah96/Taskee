@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.view.Window;
 
 import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -19,15 +21,25 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
 
     private Activity activity;
     private long date;
+    private int color;
+
     private TaskEditorView taskEditorView;
     private Calendar calendar;
 
-    public CustomTimeDialog(Activity activity, long date) {
+    public CustomTimeDialog(Activity activity, long date, String color) {
         super(activity);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.activity = activity;
         this.date = date;
+        this.color = Color.parseColor("#" + color);
+
         calendar = Calendar.getInstance();
         init();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     public CustomTimeDialog(Context context, int themeResId) {
@@ -54,6 +66,7 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
                 now.get(Calendar.DAY_OF_MONTH)
         );
         dpd.setOnCancelListener(this);
+        dpd.setAccentColor(color);
         dpd.show(activity.getFragmentManager(),"Datepickerdialog");
     }
 
@@ -71,6 +84,7 @@ public class CustomTimeDialog extends Dialog implements DatePickerDialog.OnDateS
                 false
         );
         tpd.setOnCancelListener(this);
+        tpd.setAccentColor(color);
         tpd.show(activity.getFragmentManager(), "Timepickerdialog");
     }
 

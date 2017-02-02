@@ -108,7 +108,7 @@ public class TaskEditorActivity extends AppCompatActivity implements TaskEditorV
     // Open up the date & time picker dialog
     @OnClick(R.id.edit_task_pick_date)
     void onPickDateClick() {
-        CustomTimeDialog timeDialog = new CustomTimeDialog(this, task.getTimestamp());
+        CustomTimeDialog timeDialog = new CustomTimeDialog(this, task.getTimestamp(), "");
         timeDialog.setTaskEditorPresenter(this);
         timeDialog.show();
     }

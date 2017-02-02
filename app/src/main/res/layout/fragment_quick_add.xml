@@ -39,16 +39,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edit_task_title"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/quick_add_view_margin">
+                android:layout_marginTop="@dimen/quick_add_view_margin"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/edit_task_date_on"
                         fontPath="@string/lato_light"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -80,7 +81,6 @@
 
             <EditText
                 android:id="@+id/edit_task_note"
-                fontPath="@string/lato_light"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -90,10 +90,10 @@
                 android:gravity="top|start"
                 android:hint="@string/line_add_note"
                 android:inputType="textCapSentences|textMultiLine"
-                android:maxLines="5"
                 android:textColor="@color/textColorPrimary"
                 android:textColorHint="@color/textColorSecondary"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 
@@ -145,12 +145,23 @@
 
         </LinearLayout>
 
-        <View
+        <FrameLayout
             android:id="@+id/view_bubble"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorAccent"
-            android:visibility="gone" />
+            android:visibility="gone">
+
+            <com.mikepenz.iconics.view.IconicsImageView
+                android:id="@+id/task_saved"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                app:iiv_color="@color/white"
+                app:iiv_icon="gmi-check"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
     </RelativeLayout>
 
