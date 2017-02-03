@@ -27,6 +27,7 @@ import com.ihunter.taskee.animations.Animations;
 import com.ihunter.taskee.fragments.AllTasksFragment;
 import com.ihunter.taskee.fragments.CalendarTasksFragment;
 import com.ihunter.taskee.fragments.QuickAddFragment;
+import com.ihunter.taskee.interfaces.interactors.QuickAddInteractor;
 import com.ihunter.taskee.ui.DrawerHeader;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -43,7 +44,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static com.ihunter.taskee.Constants.REVEAL_DURATION;
 import static com.ihunter.taskee.R.id.plan;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements QuickAddInteractor{
 
     @BindView(R.id.content_container)
     FrameLayout view;
@@ -232,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if (quickAddFragment == null) {
             quickAddFragment = new QuickAddFragment();
-
+            quickAddFragment.setQuickAddInteractor(this);
             ft.add(R.id.content_container, quickAddFragment);
             ft.commit();
         }
@@ -269,7 +270,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void quickAddClosed() {
+    @Override
+    public void onQuickAddClose() {
         closingQuickAdd = false;
         quickAddFragment = null;
         newPlan.setVisibility(View.VISIBLE);
@@ -286,6 +288,9 @@ public class MainActivity extends AppCompatActivity {
             animateWithArch(false);
         } else {
             animateWithoutArc(false);
+        }
+        if(currentFragment instanceof AllTasksFragment){
+            ((AllTasksFragment)currentFragment).loadAllTasks();
         }
     }
 }

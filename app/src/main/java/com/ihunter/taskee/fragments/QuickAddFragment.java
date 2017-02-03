@@ -25,10 +25,11 @@ import android.widget.TextView;
 
 import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
-import com.ihunter.taskee.activities.MainActivity;
+import com.ihunter.taskee.TaskeeApplication;
 import com.ihunter.taskee.animations.Animations;
 import com.ihunter.taskee.data.Task;
 import com.ihunter.taskee.dialogs.CustomTimeDialog;
+import com.ihunter.taskee.interfaces.interactors.QuickAddInteractor;
 import com.ihunter.taskee.interfaces.views.TaskEditorView;
 import com.ihunter.taskee.presenters.QuickAddPresenter;
 import com.ihunter.taskee.utils.ColorUtils;
@@ -62,6 +63,7 @@ import static com.ihunter.taskee.R.id.view_bubble;
 
 public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener, TaskEditorView {
 
+    private QuickAddInteractor quickAddInteractor;
     private Animations animations;
     private QuickAddPresenter presenter;
     private Task task;
@@ -168,7 +170,9 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
                     public void onColorSelected(boolean positiveResult, @ColorInt int color) {
                         if(positiveResult) {
                             task.setColor(Integer.toHexString(color));
-                            editTaskAlarm.setColor(ColorUtils.getComplimentaryColor(color));
+                            if(task.hasReminder()) {
+                                editTaskAlarm.setColor(ColorUtils.getComplimentaryColor(color));
+                            }
                             setColors(color);
                         }
                     }
@@ -183,7 +187,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     @OnClick(edit_task_save_task)
     void onSaveClick() {
-        presenter.saveTask(task);
+        presenter.saveTask(((TaskeeApplication)getActivity().getApplication()).getRealm(),task);
     }
 
     @Nullable
@@ -210,6 +214,10 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
             bubble.setBackgroundColor(selectedColor);
             onNewTask();
         }
+    }
+
+    public void setQuickAddInteractor(QuickAddInteractor quickAddInteractor){
+        this.quickAddInteractor = quickAddInteractor;
     }
 
     @Override
@@ -279,7 +287,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
     private void internalClose() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
         getActivity().getSupportFragmentManager().popBackStack();
-        ((MainActivity) getActivity()).quickAddClosed();
+        quickAddInteractor.onQuickAddClose();
     }
 
     public void closeFragment() {
@@ -321,21 +329,21 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
         bubble.setBackgroundColor(color);
         setCursorColor(editTaskTitle, contrastColor);
 
-        Drawable background = mainView.getBackground();
-        if(background instanceof GradientDrawable){
-            GradientDrawable shapeDrawable = (GradientDrawable) background;
-            shapeDrawable.setColor(color);
+        Drawable fragmentBackground = mainView.getBackground();
+        if(fragmentBackground instanceof GradientDrawable){
+            GradientDrawable shapeDrawable = (GradientDrawable) fragmentBackground;
+            shapeDrawable.mutate().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         }
-        Drawable background2 = editTaskSave.getBackground();
+        Drawable editTaskSaveBackground = editTaskSave.getBackground();
         if(Build.VERSION.SDK_INT >= 21){
-            if(background2 instanceof RippleDrawable){
-                RippleDrawable shapeDrawable2 = (RippleDrawable) background2;
-                ((GradientDrawable)shapeDrawable2.getDrawable(0)).setColor(complimentaryColor);
+            if(editTaskSaveBackground instanceof RippleDrawable){
+                RippleDrawable shapeDrawable2 = (RippleDrawable) editTaskSaveBackground;
+                shapeDrawable2.getDrawable(0).mutate().setColorFilter(complimentaryColor, PorterDuff.Mode.MULTIPLY);
             }
         }else{
-            if(background2 instanceof GradientDrawable){
-                GradientDrawable shapeDrawable = (GradientDrawable) background2;
-                shapeDrawable.setColor(color);
+            if(editTaskSaveBackground instanceof GradientDrawable){
+                GradientDrawable shapeDrawable = (GradientDrawable) editTaskSaveBackground;
+                shapeDrawable.mutate().setColorFilter(color, PorterDuff.Mode.MULTIPLY);
             }
         }
         editTaskSave.setColor(ColorUtils.isColorDark(complimentaryColor) ? Color.WHITE : Color.BLACK);

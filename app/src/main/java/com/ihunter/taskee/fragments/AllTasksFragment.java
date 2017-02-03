@@ -63,15 +63,19 @@ public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
     @Override
     public void onResume() {
         super.onResume();
+        loadAllTasks();
+    }
+
+    public void loadAllTasks(){
         presenter.refreshAllTasks();
     }
 
-    public void setupToolbar(){
+    private void setupToolbar(){
         ((MainActivity)getActivity()).setToolbar(toolbar);
         setToolbarTitle(getString(R.string.line_all_tasks));
     }
 
-    public void setupTasksList(){
+    private void setupTasksList(){
         adapter = new TaskItemAdapter(getActivity());
         allTasks.setLayoutManager(new LinearLayoutManager(getActivity()));
         allTasks.setEmptyView(todoListEmptyView);
@@ -80,7 +84,7 @@ public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
         allTasks.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
     }
 
-    public void setToolbarTitle(String title){
+    private void setToolbarTitle(String title){
         toolbarTitle.setText(title);
     }
 
