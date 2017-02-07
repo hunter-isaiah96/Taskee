@@ -1,16 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <item name="colorControlHighlight">#40ffffff</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <item name="windowActionBar">false</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="AppCompatAlertDialogStyleNoWindow" parent="Theme.AppCompat.Light.Dialog.Alert">
@@ -27,8 +26,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?actionBarSize</item>
         <item name="android:background">?colorPrimary</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:theme">@style/ToolBarTheme</item>
+    </style>
+
+    <style name="ToolBarTheme"  parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="ToolbarTitle">

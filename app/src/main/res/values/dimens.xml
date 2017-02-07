@@ -17,7 +17,7 @@
 
     <dimen name="create_task_spacing">1dp</dimen>
 
-    <dimen name="item_margin">5dp</dimen>
+    <dimen name="item_margin">15dp</dimen>
 
     <dimen name="quick_add_container_padding">8dp</dimen>
     <dimen name="quick_add_view_margin">15dp</dimen>
@@ -26,6 +26,5 @@
     <dimen name="quick_actions_size">20dp</dimen>
     <dimen name="quick_actions_padding">0dp</dimen>
     <dimen name="quick_actions_margin">10dp</dimen>
-
 
 </resources>

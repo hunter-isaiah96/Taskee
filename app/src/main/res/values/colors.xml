@@ -7,8 +7,8 @@
     <color name="colorPrimaryLight">#e4e4e4</color>
     <color name="colorAccent">#19C4D8</color>
 
-    <color name="textColorPrimary">#ffffff</color>
-    <color name="textColorSecondary">#e7e7e7</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorSecondary">#4d4d4d</color>
     <color name="textColorHint">#e1e1e1</color>
     <color name="colorBackground">@color/colorPrimary</color>
 

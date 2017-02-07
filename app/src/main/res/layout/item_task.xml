@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/placeholder_color"
     android:clickable="true"
-    android:foreground="?selectableItemBackground"
-    android:orientation="vertical"
-    android:paddingBottom="20dp">
+    android:background="@drawable/item_background"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/item_margin"
+        android:id="@+id/set_task_complete"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/item_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/item_margin"
+            android:layout_marginStart="@dimen/item_margin"
+            android:layout_marginTop="@dimen/item_margin">
+
+            <TextView
+                android:id="@+id/task_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/placeholder_title"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="16sp"
+                fontPath="@string/ff_clan_ot_narrow_news"/>
+
+            <TextView
+                android:id="@+id/task_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/placeholder_date"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="10sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/task_title"
-            android:layout_width="0dp"
+            android:id="@+id/task_note"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/placeholder_title"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/task_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/placeholder_date"
-            android:textColor="@color/textColorPrimary"
+            android:layout_marginEnd="@dimen/item_margin"
+            android:layout_marginStart="@dimen/item_margin"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/placeholder_lorem"
+            android:textColor="@color/textColorSecondary"
             android:textSize="12sp" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/task_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/placeholder_lorem"
-        android:textColor="@color/textColorPrimary"
-        android:textSize="12sp"
-        android:maxLines="2"
-        android:ellipsize="end"/>
-
-        <TextView
-            android:id="@+id/has_subtasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/ellipses"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
 
 </LinearLayout>

@@ -19,7 +19,6 @@ import com.ihunter.taskee.interfaces.repositories.TasksRepositoryImpl;
 import com.ihunter.taskee.interfaces.views.AllTasksFragmentView;
 import com.ihunter.taskee.presenters.AllTasksFragmentPresenter;
 import com.ihunter.taskee.ui.EmptyRecyclerView;
-import com.ihunter.taskee.ui.SimpleDividerItemDecoration;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +80,6 @@ public class AllTasksFragment extends Fragment implements AllTasksFragmentView{
         allTasks.setEmptyView(todoListEmptyView);
         allTasks.setHasFixedSize(true);
         allTasks.setAdapter(adapter);
-        allTasks.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
     }
 
     private void setToolbarTitle(String title){

@@ -187,7 +187,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
 
     @OnClick(edit_task_save_task)
     void onSaveClick() {
-        presenter.saveTask(((TaskeeApplication)getActivity().getApplication()).getRealm(),task);
+        presenter.saveTask(((TaskeeApplication)getActivity().getApplication()).getRealm(), task);
     }
 
     @Nullable
@@ -319,6 +319,7 @@ public class QuickAddFragment extends Fragment implements ViewTreeObserver.OnGlo
         int complimentaryColor = ColorUtils.getComplimentaryColor(color);
         int alphaContrast = Color.parseColor("#73" + Integer.toHexString(contrastColor).substring(2));
 
+        editTaskTitle.setTextColor(contrastColor);
         editTaskTitle.setHintTextColor(alphaContrast);
         editTaskNote.setTextColor(contrastColor);
         editTaskNote.setHintTextColor(alphaContrast);

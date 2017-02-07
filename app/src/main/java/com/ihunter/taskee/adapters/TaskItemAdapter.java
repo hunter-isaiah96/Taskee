@@ -61,7 +61,7 @@ public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (holder.getItemViewType()) {
             case TYPE_GROUP:
                 TaskItemViewHolder taskItemViewHolder = (TaskItemViewHolder) holder;
-                taskItemViewHolder.bind(tasksList.get(position));
+                taskItemViewHolder.bind(tasksList.get(position), getItemCount());
                 break;
             case TYPE_IMAGE:
                 TaskItemImageViewHolder taskItemImageViewHolder = (TaskItemImageViewHolder) holder;

@@ -3,13 +3,13 @@ package com.ihunter.taskee.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
                 .withActivity(this)
                 .withTranslucentStatusBar(false)
                 .withDisplayBelowStatusBar(true)
-                .withActionBarDrawerToggleAnimated(true)
+                .withActionBarDrawerToggleAnimated(false)
                 .addDrawerItems(
                         (IDrawerItem) new DrawerHeader().withSelectable(false),
                         new PrimaryDrawerItem().withIdentifier(1).withName(R.string.drawer_all_tasks).withIcon(new IconicsDrawable(this).icon(FontAwesome.Icon.faw_list_ul)).withIconTintingEnabled(true),
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
     @OnClick(plan)
     protected void planButtonClick() {
         if (Build.VERSION.SDK_INT >= 19) {
-            animateWithArch(true);
+            animateWithArc(true);
         } else {
             animateWithoutArc(true);
         }
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void animateWithArch(final boolean animateIn) {
+    private void animateWithArc(final boolean animateIn) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.width = (int) getResources().getDimension(R.dimen.fab_size);
         layoutParams.height = (int) getResources().getDimension(R.dimen.fab_size);
@@ -223,22 +223,6 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
 
     }
 
-    private void openQuickAddActivity(){
-        Intent i = new Intent(this, TestActivity.class);
-        startActivity(i);
-        overridePendingTransition(0, 0);
-    }
-
-    private void openQuickAddFragment() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        if (quickAddFragment == null) {
-            quickAddFragment = new QuickAddFragment();
-            quickAddFragment.setQuickAddInteractor(this);
-            ft.add(R.id.content_container, quickAddFragment);
-            ft.commit();
-        }
-    }
-
     public void setToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -253,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
             }
 
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
+                super.onDrawerSlide(drawerView, 0);
             }
         });
         mDrawer.getActionBarDrawerToggle().syncState();
@@ -270,8 +254,20 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
         }
     }
 
+    private void openQuickAddFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (quickAddFragment == null) {
+            quickAddFragment = new QuickAddFragment();
+            quickAddFragment.setQuickAddInteractor(this);
+            ft.add(R.id.content_container, quickAddFragment);
+            ft.commit();
+            mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        }
+    }
+
     @Override
     public void onQuickAddClose() {
+        mDrawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         closingQuickAdd = false;
         quickAddFragment = null;
         newPlan.setVisibility(View.VISIBLE);
@@ -285,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements QuickAddInteracto
                 .setInterpolator(new OvershootInterpolator())
                 .start();
         if (Build.VERSION.SDK_INT >= 19) {
-            animateWithArch(false);
+            animateWithArc(false);
         } else {
             animateWithoutArc(false);
         }

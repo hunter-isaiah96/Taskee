@@ -28,6 +28,9 @@
         <activity
             android:name=".activities.TestActivity"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".activities.ViewTaskActivity"
+            android:theme="@style/AppTheme"/>
 
         <receiver android:name=".services.AlarmReceiver">
             <intent-filter>
@@ -35,5 +38,7 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </receiver>
+
     </application>
+
 </manifest>

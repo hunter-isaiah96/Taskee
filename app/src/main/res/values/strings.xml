@@ -24,6 +24,21 @@
     <string name="lato_light_italic">fonts/Lato-LightItalic.ttf</string>
     <string name="lato_regular">fonts/Lato-Regular.ttf</string>
 
+    <string name="ff_clan_ot_black">fonts/FF Clan OT Black.otf</string>
+    <string name="ff_clan_ot_bold">fonts/FF Clan OT Bold.otf</string>
+    <string name="ff_clan_ot_book">fonts/FF Clan OT Book.otf</string>
+    <string name="ff_clan_ot_medium">fonts/FF Clan OT Medium.otf</string>
+    <string name="ff_clan_ot_narrow_black">fonts/FF Clan OT Narrow Black.otf</string>
+    <string name="ff_clan_ot_narrow_bold">fonts/FF Clan OT Narrow Bold.otf</string>
+    <string name="ff_clan_ot_narrow_book">fonts/FF Clan OT Narrow Book.otf</string>
+    <string name="ff_clan_ot_narrow_medium">fonts/FF Clan OT Narrow Medium.otf</string>
+    <string name="ff_clan_ot_narrow_news">fonts/FF Clan OT Narrow News.otf</string>
+    <string name="ff_clan_ot_narrow_thin">fonts/FF Clan OT Narrow Thin.otf</string>
+    <string name="ff_clan_ot_narrow_ultra">fonts/FF Clan OT Narrow Ultra.otf</string>
+    <string name="ff_clan_ot_news">fonts/FF Clan OT News.otf</string>
+    <string name="ff_clan_ot_thin">fonts/FF Clan OT Thin.otf</string>
+    <string name="ff_clan_ot_ultra">fonts/FF Clan OT Ultra.otf</string>
+
     <string name="dialog_remove_item">Are you sure you want to remove this item</string>
     <string name="dialog_positive">YES</string>
     <string name="dialog_negative">NO</string>
@@ -61,5 +76,9 @@
     <string name="shortcut_short_label">Create New Note</string>
     <string name="shortcut_long_label">Create New Note</string>
     <string name="shortcut_disabled_label">Create New Note</string>
+
+    <string name="menu_complete">Complete</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_trash">Trash</string>
 
 </resources>

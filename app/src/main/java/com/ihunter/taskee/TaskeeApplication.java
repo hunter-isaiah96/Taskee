@@ -20,7 +20,7 @@ public class TaskeeApplication extends Application{
         super.onCreate();
         Realm.init(this);
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath(getString(R.string.lato_regular))
+                        .setDefaultFontPath(getString(R.string.ff_clan_ot_book))
                         .setFontAttrId(R.attr.fontPath)
                         .build());
         Iconics.registerFont(new FontAwesome());
