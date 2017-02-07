@@ -61,7 +61,7 @@ public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (holder.getItemViewType()) {
             case TYPE_GROUP:
                 TaskItemViewHolder taskItemViewHolder = (TaskItemViewHolder) holder;
-                taskItemViewHolder.bind(tasksList.get(position), getItemCount());
+                taskItemViewHolder.bind(tasksList.get(position), this, getItemCount());
                 break;
             case TYPE_IMAGE:
                 TaskItemImageViewHolder taskItemImageViewHolder = (TaskItemImageViewHolder) holder;
@@ -103,14 +103,21 @@ public class TaskItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
-    public void onItemDelete(int position) {
+    public void setTaskCompete(boolean isComplete, int position) {
         realm.beginTransaction();
-        getPlansList().deleteFromRealm(position);
+        getPlansList().get(position).setCompleted(isComplete);
         realm.commitTransaction();
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getPlansList().size());
-        if (calendarView != null) {
-            calendarView.onRefreshEvents();
-        }
     }
+
+//    @Override
+//    public void onItemDelete(int position) {
+//        realm.beginTransaction();
+//        getPlansList().deleteFromRealm(position);
+//        realm.commitTransaction();
+//        notifyItemRemoved(position);
+//        notifyItemRangeChanged(position, getPlansList().size());
+//        if (calendarView != null) {
+//            calendarView.onRefreshEvents();
+//        }
+//    }
 }

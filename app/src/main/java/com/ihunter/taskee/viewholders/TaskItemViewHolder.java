@@ -16,9 +16,11 @@ import com.ihunter.taskee.Constants;
 import com.ihunter.taskee.R;
 import com.ihunter.taskee.activities.ViewTaskActivity;
 import com.ihunter.taskee.data.Task;
+import com.ihunter.taskee.interfaces.interactors.TaskItemAdapterInteractor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -38,14 +40,16 @@ public class TaskItemViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.set_task_complete)
     AppCompatCheckBox setTaskComplete;
+    private TaskItemAdapterInteractor taskItemAdapterInteractor;
 
     public TaskItemViewHolder(View v) {
         super(v);
         ButterKnife.bind(this, v);
     }
 
-    public void bind(Task task, int tasksSize) {
+    public void bind(Task task, TaskItemAdapterInteractor taskItemAdapterInteractor, int tasksSize) {
         Context context = itemView.getContext();
+        this.taskItemAdapterInteractor = taskItemAdapterInteractor;
         this.mTask = task;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if(getAdapterPosition() == tasksSize - 1){
@@ -70,6 +74,7 @@ public class TaskItemViewHolder extends RecyclerView.ViewHolder {
                 }
         );
         setTaskComplete.setSupportButtonTintList(colorStateList);
+        setTaskComplete.setChecked(task.isCompleted());
         taskTitle.setText(task.getTitle());
         taskDate.setText(Constants.getFullDateTime(task.getTimestamp()));
         taskNote.setText(task.getNote());
@@ -82,6 +87,10 @@ public class TaskItemViewHolder extends RecyclerView.ViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
+    }
 
+    @OnCheckedChanged(R.id.set_task_complete)
+    void SetTaskCompletion(boolean isComplete){
+        taskItemAdapterInteractor.setTaskCompete(isComplete, getAdapterPosition());
     }
 }

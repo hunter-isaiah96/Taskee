@@ -5,5 +5,5 @@ package com.ihunter.taskee.interfaces.interactors;
  */
 
 public interface TaskItemAdapterInteractor {
-    void onItemDelete(int position);
+    void setTaskCompete(boolean isComplete, int position);
 }

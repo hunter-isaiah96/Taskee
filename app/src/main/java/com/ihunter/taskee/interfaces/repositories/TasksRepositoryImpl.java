@@ -17,7 +17,6 @@ public class TasksRepositoryImpl implements TaskRepository{
 
     public TasksRepositoryImpl(Context context){
         realm = ((TaskeeApplication)context.getApplicationContext()).getRealm();
-
     }
 
     @Override
@@ -48,6 +47,11 @@ public class TasksRepositoryImpl implements TaskRepository{
         todayEnd.set(Calendar.MILLISECOND, 999);
         todayEnd.set(Calendar.AM_PM, Calendar.PM);
         return realm.where(Task.class).greaterThanOrEqualTo("timestamp", todayStart.getTimeInMillis()).lessThan("timestamp", todayEnd.getTimeInMillis()).findAllSorted("id", Sort.DESCENDING);
+    }
+
+    @Override
+    public Task getOneTask(int id) {
+        return realm.where(Task.class).equalTo("id", id).findFirst();
     }
 
 }

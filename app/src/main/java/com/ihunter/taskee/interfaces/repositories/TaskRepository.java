@@ -13,5 +13,6 @@ public interface TaskRepository {
     RealmResults<Task> getAllTasks();
     RealmResults<Task> getEmptyTasks();
     RealmResults<Task> getTasksOnDay(long timeStamp);
+    Task getOneTask(int id);
 
 }
